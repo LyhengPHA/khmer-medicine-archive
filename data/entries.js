@@ -1,0 +1,70 @@
+const entries = [
+  {
+    slug: "stomach-related-remedy",
+    title: "ជម្ងឺក្រពះ",
+    englishTitle: "Stomach-related remedy",
+    description:
+      "An archive entry documenting contributor-reported traditional Khmer herbal knowledge associated with stomach-related concerns.",
+    ingredients: ["សំបកឃ្មៀរ", "ដើមលាយលាក់", "ដើមឆ្កែស្រែង"],
+    ingredientAmount: "៣ ខាំ គ្រប់មុខ",
+    preparation: [
+      "ដាំទឹកមួយកំសៀវអោយពុះ។",
+      "បង់ថ្នាំចូល និងដាំរយៈពេល ៣០ នាទី។",
+    ],
+    usage: ["ចាក់ថ្នាំពីកំសៀវដាក់កែវ", "ពិសារនៅក្ដៅអ៊ុនៗ។"],
+    frequency: "៣ ថ្ងៃ ៣ ដង ឬ ៣ ថ្ងៃហូប ១ លីត្រកន្លះ។",
+    duration: "៥ សប្ដាហ៍ ចាប់ផ្ដើមជាសះស្បើយ។",
+    precautions: "មិនមាន បើប្រើប្រាស់តាមការណែនាំ។",
+    contributor: "លោកប៉ារបស់ខ្ញុំ",
+    learnedFrom: "លោកប៉ារបស់ខ្ញុំ",
+    place: "ខេត្តតាកែវ ភូមិវាយឈ្នះ ស្រុកសំរោង ឃុំរវៀង",
+    story: null,
+    photoAvailable: true,
+  },
+  {
+    slug: "liver-related-remedy",
+    title: "ជម្ងឺថ្លើម",
+    englishTitle: "Liver-related remedy",
+    description:
+      "An archive entry documenting contributor-reported traditional Khmer herbal knowledge associated with liver-related concerns.",
+    ingredients: ["វល្លិ៍ស្លឹកត្រចៀកដំរី", "ស្មៅចម្លកទន្សាយ"],
+    ingredientAmount: "០៥ គីឡូ ឬ ៥ ខាំ គ្រប់មុខ",
+    preparation: [
+      "ដាំទឹកមួយកំសៀវអោយពុះ។",
+      "បង់ថ្នាំចូល និងដាំរយៈពេល ៣០ នាទី។",
+    ],
+    usage: ["ចាក់ថ្នាំពីកំសៀវដាក់កែវ", "ពិសារនៅក្ដៅអ៊ុនៗ។"],
+    frequency: "៣ ថ្ងៃ ៣ ដង ឬ ៣ ថ្ងៃហូប ១ លីត្រកន្លះ។",
+    duration: "១ ខែ កន្លះ",
+    precautions: "មិនមាន",
+    contributor: "លោកប៉ា",
+    learnedFrom: "លោកប៉ា",
+    place: "ខេត្តតាកែវ ភូមិវាយឈ្នះ ស្រុកសំរោង ឃុំរវៀង",
+    story: null,
+    photoAvailable: true,
+  },
+  {
+    slug: "joint-related-remedy",
+    title: "ជម្ងឺសន្លាក់",
+    englishTitle: "Joint-related remedy",
+    description:
+      "An archive entry documenting contributor-reported traditional Khmer herbal knowledge associated with joint-related concerns.",
+    ingredients: ["ស្មៅជើងក្រាស់", "បន្លាព្រះក្លប", "ស្លឹកឬស្សីព្រៃ"],
+    ingredientAmount: "៣ ខាំ គ្រប់មុខ",
+    preparation: [
+      "ដាំទឹកមួយកំសៀវអោយពុះ។",
+      "បង់ថ្នាំចូល និងដាំរយៈពេល ៣០ នាទី។",
+    ],
+    usage: ["ចាក់ថ្នាំពីកំសៀវដាក់កែវ", "ពិសារនៅក្ដៅអ៊ុនៗ។"],
+    frequency: "៣ ថ្ងៃ ៣ ដង ឬ ៣ ថ្ងៃហូប ១ លីត្រកន្លះ។",
+    duration: "១ ខែ កន្លះ ទៅ ៣ ខែ",
+    precautions: "មិនមាន",
+    contributor: "លោកប៉ា",
+    learnedFrom: "លោកប៉ា",
+    place: "ខេត្តតាកែវ ភូមិវាយឈ្នះ ស្រុកសំរោង ឃុំរវៀង",
+    story: null,
+    photoAvailable: true,
+  },
+];
+
+export default entries;
