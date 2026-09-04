@@ -1,0 +1,618 @@
+:root {
+  --paper: #e9dfc5;
+  --paper-light: #f5eedc;
+  --ink: #25281f;
+  --green: #243e2e;
+  --green-light: #385844;
+  --red: #8a3e32;
+  --faded: #786f5c;
+  --line: rgba(57, 55, 41, 0.32);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  background-color: var(--paper);
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.18), rgba(85, 67, 35, 0.04)),
+    repeating-linear-gradient(
+      0deg,
+      transparent 0,
+      transparent 3px,
+      rgba(74, 62, 38, 0.025) 4px
+    );
+  color: var(--ink);
+  font-family: Georgia, "Times New Roman", "Khmer OS Battambang", serif;
+}
+
+a {
+  color: inherit;
+}
+
+.page-width {
+  width: min(1120px, calc(100% - 48px));
+  margin-inline: auto;
+}
+
+.site-header {
+  min-height: 84px;
+  padding: 14px max(24px, calc((100% - 1120px) / 2));
+  border-top: 6px solid var(--green);
+  border-bottom: 1px solid var(--line);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.archive-name {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  color: var(--green);
+  font-size: 17px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+.archive-mark {
+  width: 44px;
+  height: 44px;
+  border: 1px solid var(--red);
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  color: var(--red);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+}
+
+.site-header > p,
+.entry-count {
+  margin: 0;
+  color: var(--faded);
+  font-family: "Courier New", monospace;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.hero {
+  min-height: 570px;
+  padding-block: 105px 90px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 230px;
+  align-items: center;
+  gap: 90px;
+}
+
+.eyebrow,
+.section-number,
+.entry-card-topline,
+.entry-category,
+.entry-summary h4,
+.detail-block h4,
+.entry-source dt {
+  font-family: "Courier New", monospace;
+  text-transform: uppercase;
+  letter-spacing: 0.11em;
+}
+
+.eyebrow {
+  margin: 0 0 22px;
+  color: var(--red);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.hero h1 {
+  max-width: 770px;
+  margin: 0;
+  color: var(--green);
+  font-size: clamp(44px, 6.2vw, 78px);
+  font-weight: 500;
+  letter-spacing: -0.035em;
+  line-height: 1.02;
+}
+
+.hero-description {
+  max-width: 720px;
+  margin: 32px 0 0;
+  color: #554f40;
+  font-size: 18px;
+  line-height: 1.75;
+}
+
+.archive-seal {
+  width: 210px;
+  height: 210px;
+  border: 2px solid rgba(138, 62, 50, 0.66);
+  border-radius: 50%;
+  box-shadow:
+    inset 0 0 0 7px var(--paper),
+    inset 0 0 0 8px rgba(138, 62, 50, 0.42);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: rgba(138, 62, 50, 0.78);
+  text-align: center;
+  transform: rotate(-7deg);
+}
+
+.archive-seal span {
+  font-size: 25px;
+}
+
+.archive-seal strong {
+  margin-block: 7px;
+  border-block: 1px solid currentColor;
+  padding: 6px 16px;
+  font-family: "Courier New", monospace;
+  font-size: 17px;
+  letter-spacing: 0.14em;
+}
+
+.archive-seal small {
+  font-family: "Courier New", monospace;
+  font-size: 10px;
+  letter-spacing: 0.12em;
+}
+
+.preservation {
+  padding-block: 65px;
+  border-block: 1px solid var(--line);
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 50px;
+}
+
+.section-number {
+  margin: 7px 0 0;
+  color: var(--red);
+  font-size: 11px;
+}
+
+.preservation h2,
+.provenance h2,
+.section-heading h2 {
+  margin: 0;
+  font-size: clamp(30px, 4vw, 46px);
+  font-weight: 500;
+  line-height: 1.1;
+}
+
+.preservation div > p {
+  max-width: 720px;
+  margin: 20px 0 0;
+  color: #554f40;
+  font-size: 18px;
+  line-height: 1.8;
+}
+
+.provenance {
+  padding-block: 78px;
+  background: var(--green);
+  color: var(--paper-light);
+}
+
+.provenance-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.35fr;
+  gap: 70px;
+}
+
+.eyebrow.light {
+  color: #c68b75;
+}
+
+.provenance-copy > p {
+  max-width: 610px;
+  margin: 0;
+  color: #d6ceb9;
+  font-size: 17px;
+  line-height: 1.75;
+}
+
+.provenance dl {
+  margin: 35px 0 0;
+  border-top: 1px solid rgba(233, 223, 197, 0.3);
+}
+
+.provenance dl div {
+  padding: 15px 0;
+  border-bottom: 1px solid rgba(233, 223, 197, 0.3);
+  display: grid;
+  grid-template-columns: 150px 1fr;
+  gap: 20px;
+}
+
+.provenance dt {
+  color: #aaa18c;
+  font-family: "Courier New", monospace;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.provenance dd {
+  margin: 0;
+}
+
+.entries {
+  padding-block: 95px 110px;
+}
+
+.section-heading {
+  margin-bottom: 42px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.archive-search {
+  margin: -14px 0 32px;
+}
+
+.archive-search label {
+  margin-bottom: 10px;
+  display: block;
+  color: var(--green-light);
+  font-family: "Courier New", monospace;
+  font-size: 10px;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+}
+
+.archive-search input {
+  width: 100%;
+  padding: 13px 15px;
+  border: 1px solid rgba(69, 65, 48, 0.48);
+  border-radius: 0;
+  background: rgba(247, 240, 220, 0.68);
+  color: var(--ink);
+  font: inherit;
+}
+
+.archive-search input::placeholder {
+  color: var(--faded);
+}
+
+.archive-search input:focus {
+  outline: 2px solid rgba(56, 88, 68, 0.55);
+  outline-offset: 2px;
+}
+
+.entry-list {
+  display: grid;
+  gap: 28px;
+}
+
+.search-empty {
+  padding: 28px 32px;
+  border: 1px solid rgba(69, 65, 48, 0.48);
+  background: rgba(247, 240, 220, 0.68);
+  color: #514c3e;
+}
+
+.search-empty p {
+  margin: 0;
+  line-height: 1.6;
+}
+
+.search-empty p + p {
+  margin-top: 7px;
+  color: var(--faded);
+  font-size: 14px;
+}
+
+.entry-card {
+  position: relative;
+  overflow: hidden;
+  padding: 30px 34px 0;
+  border: 1px solid rgba(69, 65, 48, 0.48);
+  background:
+    linear-gradient(
+      90deg,
+      transparent 42px,
+      rgba(138, 62, 50, 0.15) 43px,
+      transparent 44px
+    ),
+    rgba(247, 240, 220, 0.68);
+  box-shadow: 3px 4px 0 rgba(80, 66, 38, 0.08);
+}
+
+.entry-card::after {
+  position: absolute;
+  right: -24px;
+  bottom: -38px;
+  width: 120px;
+  height: 120px;
+  border: 1px solid rgba(138, 62, 50, 0.12);
+  border-radius: 50%;
+  content: "";
+}
+
+.entry-card-topline {
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--line);
+  display: flex;
+  justify-content: space-between;
+  color: var(--faded);
+  font-size: 10px;
+}
+
+.entry-card-topline p,
+.entry-category {
+  margin: 0;
+}
+
+.entry-title-row {
+  padding-block: 24px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 30px;
+}
+
+.entry-category {
+  color: var(--red);
+  font-size: 10px;
+  font-weight: 700;
+}
+
+.entry-title-row h3 {
+  margin: 9px 0 5px;
+  color: var(--green);
+  font-size: clamp(30px, 4vw, 44px);
+  font-weight: 500;
+}
+
+.khmer-entry-name {
+  font-family: "Khmer OS Battambang", "Noto Serif Khmer", Georgia, serif;
+}
+
+.english-name {
+  margin: 0;
+  color: var(--faded);
+  font-size: 17px;
+}
+
+.record-stamp {
+  margin-top: 4px;
+  padding: 7px 9px 5px;
+  border: 2px solid rgba(138, 62, 50, 0.52);
+  color: rgba(138, 62, 50, 0.68);
+  font-family: "Courier New", monospace;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  transform: rotate(-4deg);
+}
+
+.entry-summary {
+  margin: 0 0 24px;
+}
+
+.entry-summary h4 {
+  margin: 0 0 9px;
+  color: var(--green-light);
+  font-size: 10px;
+}
+
+.entry-summary p {
+  margin: 0;
+  color: #5e5747;
+  font-style: italic;
+  line-height: 1.6;
+}
+
+.entry-details {
+  border-block: 1px solid var(--line);
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.detail-block {
+  padding: 24px;
+  border-right: 1px solid var(--line);
+}
+
+.detail-block:first-child {
+  padding-left: 0;
+}
+
+.detail-block:last-child {
+  border-right: 0;
+}
+
+.detail-block h4 {
+  margin: 0 0 13px;
+  color: var(--green-light);
+  font-size: 10px;
+}
+
+.detail-block p,
+.ingredient-list,
+.step-list {
+  margin: 0;
+  color: #514c3e;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.ingredient-list,
+.step-list {
+  padding-left: 1.4rem;
+}
+
+.usage-block {
+  grid-column: 1 / -1;
+  padding-inline: 0;
+  border-top: 1px solid var(--line);
+  border-right: 0;
+}
+
+.detail-block .usage-note {
+  margin-bottom: 10px;
+  color: var(--faded);
+  font-size: 12px;
+  font-style: italic;
+}
+
+.entry-source {
+  margin: 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.entry-source div {
+  padding: 18px 0 20px;
+}
+
+.entry-source div + div {
+  padding-left: 25px;
+  border-left: 1px solid var(--line);
+}
+
+.entry-source dt {
+  color: var(--faded);
+  font-size: 9px;
+}
+
+.entry-source dd {
+  margin: 5px 0 0;
+  font-size: 13px;
+}
+
+.site-footer {
+  padding-block: 33px;
+  border-top: 1px solid rgba(233, 223, 197, 0.2);
+  background: #1c3023;
+  color: #c9c0aa;
+}
+
+.footer-inner {
+  display: flex;
+  justify-content: space-between;
+  gap: 30px;
+}
+
+.footer-inner p {
+  margin: 0;
+  font-size: 12px;
+}
+
+@media (max-width: 760px) {
+  .page-width {
+    width: min(100% - 32px, 1120px);
+  }
+
+  .site-header {
+    min-height: 72px;
+    padding-inline: 16px;
+  }
+
+  .site-header > p {
+    display: none;
+  }
+
+  .archive-name {
+    font-size: 14px;
+  }
+
+  .hero {
+    min-height: auto;
+    padding-block: 72px;
+    grid-template-columns: 1fr;
+    gap: 48px;
+  }
+
+  .archive-seal {
+    width: 150px;
+    height: 150px;
+    justify-self: end;
+  }
+
+  .preservation,
+  .provenance-grid {
+    grid-template-columns: 1fr;
+    gap: 25px;
+  }
+
+  .provenance {
+    padding-block: 58px;
+  }
+
+  .provenance dl div,
+  .entry-details,
+  .entry-source {
+    grid-template-columns: 1fr;
+  }
+
+  .entries {
+    padding-block: 70px;
+  }
+
+  .entry-card {
+    padding: 22px 22px 0;
+    background: rgba(247, 240, 220, 0.68);
+  }
+
+  .entry-title-row {
+    gap: 15px;
+  }
+
+  .detail-block,
+  .detail-block:first-child {
+    padding: 20px 0;
+    border-right: 0;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .detail-block:last-child {
+    border-bottom: 0;
+  }
+
+  .usage-block {
+    border-top: 0;
+  }
+
+  .entry-source div + div {
+    padding: 18px 0 20px;
+    border-top: 1px solid var(--line);
+    border-left: 0;
+  }
+
+  .footer-inner {
+    flex-direction: column;
+    gap: 10px;
+  }
+}
+
+@media (max-width: 460px) {
+  .hero h1 {
+    font-size: 39px;
+  }
+
+  .section-heading {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .record-stamp {
+    display: none;
+  }
+}
