@@ -8,6 +8,7 @@ import { searchEntries } from "../lib/searchEntries.js";
 
 export default function Home() {
   const [searchTerm, setSearchTerm] = useState("");
+  const isWhitespaceOnly = searchTerm.length > 0 && searchTerm.trim() === "";
   const filteredEntries = searchEntries(entries, searchTerm);
 
   return (
@@ -96,10 +97,17 @@ export default function Home() {
               onChange={(event) => setSearchTerm(event.target.value)}
               placeholder="Search entry details in Khmer or English"
               autoComplete="off"
+              aria-invalid={isWhitespaceOnly}
+              aria-describedby={isWhitespaceOnly ? "search-error" : undefined}
             />
           </div>
 
-          {filteredEntries.length > 0 ? (
+          {isWhitespaceOnly ? (
+            <div className="search-empty" id="search-error" role="status">
+              <p lang="km">សូមបញ្ចូលពាក្យស្វែងរក មិនមែនតែដកឃ្លាទេ។</p>
+              <p>Enter a search term, not just spaces.</p>
+            </div>
+          ) : filteredEntries.length > 0 ? (
             <div className="entry-list">
               {filteredEntries.map((entry) => (
                 <EntryCard
