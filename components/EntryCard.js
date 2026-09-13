@@ -1,71 +1,66 @@
+import BilingualDetail from "./BilingualDetail.js";
+
+const details = [
+  ["ingredients", "Ingredients / គ្រឿងផ្សំ"],
+  ["ingredientAmount", "Amount / បរិមាណ"],
+  ["preparation", "Preparation / របៀបរៀបចំ"],
+  ["usage", "Usage / របៀបប្រើ"],
+  ["frequency", "Frequency / ភាពញឹកញាប់"],
+  ["duration", "Duration / រយៈពេល"],
+  ["precautions", "Precautions / ការប្រុងប្រយ័ត្ន"],
+];
+
 export default function EntryCard({ entry, recordNumber }) {
   return (
-    <article className="entry-card">
-      <div className="entry-card-topline">
-        <p>Condition / body system record</p>
-        <p>No. {String(recordNumber).padStart(2, "0")}</p>
-      </div>
-
-      <div className="entry-title-row">
-        <div>
-          <p className="entry-category">Traditionally used for</p>
-          <h3 className="khmer-entry-name" lang="km">
-            {entry.title}
-          </h3>
-          <p className="english-name">{entry.englishTitle}</p>
-        </div>
-        <span className="record-stamp">Recorded</span>
-      </div>
-
-      <div className="entry-summary">
-        <h4>Short description</h4>
-        <p>{entry.description}</p>
-      </div>
-
+    <details className="entry-card">
+      <summary className="entry-toggle">
+        <span className="entry-card-topline">
+          <span>Condition / body system record</span>
+          <span>No. {String(recordNumber).padStart(2, "0")}</span>
+        </span>
+        <span className="entry-title-row">
+          <span>
+            <span className="entry-category">Traditionally used for</span>
+            <span className="khmer-entry-name" lang="km">{entry.title}</span>
+            <span className="english-name" lang="en">{entry.englishTitle}</span>
+          </span>
+          <span className="record-stamp">Recorded</span>
+        </span>
+        <span className="entry-preview" lang="km">{entry.khmerDescription}</span>
+        <span className="entry-preview entry-translation" lang="en">{entry.description}</span>
+        <span className="entry-toggle-label">
+          <span className="when-closed">View details / មើលព័ត៌មានលម្អិត</span>
+          <span className="when-open">Hide details / លាក់ព័ត៌មានលម្អិត</span>
+          <span className="entry-toggle-icon" aria-hidden="true">+</span>
+        </span>
+      </summary>
+      <p className="translation-note">
+        English translations and name spellings are drafts awaiting source review.
+        Supplied plant names await verification; missing names are marked as pending.
+      </p>
+      <p className="translation-note">
+        Contributor-reported traditional use; not medical advice.
+      </p>
       <div className="entry-details">
-        <div className="detail-block">
-          <h4>Ingredients / គ្រឿងផ្សំ</h4>
-          <ol className="ingredient-list" lang="km">
-            {entry.ingredients.map((ingredient, index) => (
-              <li key={`${entry.slug}-${index}`}>{ingredient}</li>
-            ))}
-          </ol>
-        </div>
-        <div className="detail-block">
-          <h4>Amount / បរិមាណ</h4>
-          <p>{entry.ingredientAmount}</p>
-        </div>
-        <div className="detail-block">
-          <h4>Preparation / របៀបរៀបចំ</h4>
-          <ol className="step-list" lang="km">
-            {entry.preparation.map((step, index) => (
-              <li key={`${entry.slug}-preparation-${index}`}>{step}</li>
-            ))}
-          </ol>
-        </div>
-        <div className="detail-block usage-block">
-          <h4>Usage / របៀបប្រើ</h4>
-          <p className="usage-note">
-            Contributor-reported traditional use; not medical advice.
-          </p>
-          <ol className="step-list" lang="km">
-            {entry.usage.map((step, index) => (
-              <li key={`${entry.slug}-usage-${index}`}>{step}</li>
-            ))}
-          </ol>
-        </div>
+        {details.map(([field, label]) => (
+          <div className={"detail-block" + (field === "usage" || field === "precautions" ? " usage-block" : "")} key={field}>
+            <h4>{label}</h4>
+            <BilingualDetail khmer={entry[field]} english={entry.english?.[field]} />
+          </div>
+        ))}
       </div>
-
       <dl className="entry-source">
-        <div>
-          <dt>Contributor / Source</dt>
-          <dd>{entry.contributor}</dd>
-        </div>
-        <div>
-          <dt>Place / Region</dt>
-          <dd>{entry.place}</dd>
-        </div>
+        {[
+          ["contributor", "Contributor / Source"],
+          ["place", "Place / Region"],
+          ["learnedFrom", "Learned from"],
+        ].map(([field, label]) => (
+          <div key={field}>
+            <dt>{label}</dt>
+            <dd><BilingualDetail khmer={entry[field]} english={entry.english?.[field]} /></dd>
+          </div>
+        ))}
       </dl>
-    </article>
+    </details>
   );
 }

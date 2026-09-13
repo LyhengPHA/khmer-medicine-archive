@@ -616,3 +616,74 @@ a {
     display: none;
   }
 }
+
+/* Keep the original text and its translation together. */
+.entry-translation {
+  display: block;
+  margin-top: 6px;
+  color: #625a49;
+  font-size: 13px;
+  line-height: 1.6;
+}
+.detail-block p.entry-translation { margin-top: 6px; }
+.step-list li + li { margin-top: 12px; }
+.translation-note {
+  color: #625a49;
+  font-size: 13px;
+  line-height: 1.6;
+}
+.entry-source dd p { margin: 0; }
+.entry-source dd p + p { margin-top: 6px; }
+.entry-source div:nth-child(3) { padding-left: 0; border-left: 0; }
+
+/* Compact archive cards expand into a full-width record. */
+.entry-list {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-items: start;
+}
+.entry-card { min-width: 0; }
+.entry-card[open] { grid-column: 1 / -1; }
+.entry-card::after { pointer-events: none; }
+.entry-toggle {
+  display: block;
+  padding-bottom: 24px;
+  cursor: pointer;
+  list-style: none;
+}
+.entry-toggle::-webkit-details-marker { display: none; }
+.entry-toggle:focus-visible {
+  outline: 2px solid var(--green);
+  outline-offset: 5px;
+}
+.entry-toggle:hover .entry-toggle-label { color: var(--red); }
+.entry-toggle .entry-category,
+.entry-toggle .english-name,
+.entry-preview { display: block; }
+.entry-toggle .khmer-entry-name {
+  display: block;
+  margin: 9px 0 5px;
+  color: var(--green);
+  font-size: clamp(26px, 3vw, 38px);
+  font-weight: 500;
+  line-height: 1.5;
+}
+.entry-preview { line-height: 1.7; color: #5e5747; }
+.entry-toggle-label {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: 22px;
+  border-top: 1px solid var(--line);
+  padding-top: 16px;
+  color: var(--green);
+  font-size: 14px;
+}
+.entry-toggle-icon { font-size: 24px; line-height: 1; }
+.entry-toggle .when-open { display: none; }
+.entry-card[open] .when-open { display: inline; }
+.entry-card[open] .when-closed { display: none; }
+.entry-card[open] .entry-toggle-icon { transform: rotate(45deg); }
+@media (max-width: 760px) {
+  .entry-list { grid-template-columns: 1fr; }
+}
