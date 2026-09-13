@@ -4,26 +4,11 @@ import { useState } from "react";
 import EntryCard from "../components/EntryCard.js";
 import collection from "../collection.config.js";
 import entries from "../data/entries.js";
+import { searchEntries } from "../lib/searchEntries.js";
 
 export default function Home() {
   const [searchTerm, setSearchTerm] = useState("");
-  const normalizedSearch = searchTerm.trim().toLocaleLowerCase();
-
-  const filteredEntries = normalizedSearch
-    ? entries.filter((entry) => {
-        const searchableText = [
-          entry.title,
-          entry.englishTitle,
-          entry.description,
-          ...entry.ingredients,
-          entry.place,
-        ]
-          .join(" ")
-          .toLocaleLowerCase();
-
-        return searchableText.includes(normalizedSearch);
-      })
-    : entries;
+  const filteredEntries = searchEntries(entries, searchTerm);
 
   return (
     <>
@@ -103,13 +88,13 @@ export default function Home() {
           </div>
 
           <div className="archive-search" role="search">
-            <label htmlFor="entry-search">Search the archive</label>
+            <label htmlFor="entry-search">Search the archive / ស្វែងរក</label>
             <input
               id="entry-search"
               type="search"
               value={searchTerm}
               onChange={(event) => setSearchTerm(event.target.value)}
-              placeholder="Search Khmer or English titles, ingredients, or places"
+              placeholder="Search entry details in Khmer or English"
               autoComplete="off"
             />
           </div>
