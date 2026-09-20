@@ -515,6 +515,110 @@ a {
   font-size: 12px;
 }
 
+/* Auth pages (login / signup) */
+.auth-page {
+  min-height: 100vh;
+  padding: 48px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--green);
+}
+
+.auth-card {
+  width: min(420px, 100%);
+  padding: 40px 36px;
+  border: 1px solid rgba(233, 223, 197, 0.3);
+  background: var(--paper-light);
+}
+
+.auth-card h1 {
+  margin: 6px 0 28px;
+  color: var(--green);
+  font-size: clamp(26px, 4vw, 32px);
+  font-weight: 500;
+  line-height: 1.15;
+}
+
+.auth-field {
+  margin-bottom: 20px;
+}
+
+.auth-field label {
+  margin-bottom: 10px;
+  display: block;
+  color: var(--green-light);
+  font-family: "Courier New", monospace;
+  font-size: 10px;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+}
+
+.auth-field input {
+  width: 100%;
+  padding: 13px 15px;
+  border: 1px solid rgba(69, 65, 48, 0.48);
+  border-radius: 0;
+  background: rgba(247, 240, 220, 0.68);
+  color: var(--ink);
+  font: inherit;
+}
+
+.auth-field input:focus {
+  outline: 2px solid rgba(56, 88, 68, 0.55);
+  outline-offset: 2px;
+}
+
+.auth-submit {
+  width: 100%;
+  padding: 14px;
+  border: 1px solid var(--green);
+  background: var(--green);
+  color: var(--paper-light);
+  font: inherit;
+  font-size: 13px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.auth-submit:hover,
+.auth-submit:focus-visible {
+  background: var(--red);
+  border-color: var(--red);
+}
+
+.auth-submit:disabled {
+  cursor: not-allowed;
+  opacity: 0.65;
+}
+
+.auth-error {
+  margin: -6px 0 20px;
+  color: var(--red);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.auth-success {
+  margin: 0 0 8px;
+  color: var(--green-light);
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+.auth-switch {
+  margin: 24px 0 0;
+  color: var(--faded);
+  font-size: 14px;
+  text-align: center;
+}
+
+.auth-switch a {
+  color: var(--green);
+  text-decoration: underline;
+}
+
 @media (max-width: 760px) {
   .page-width {
     width: min(100% - 32px, 1120px);
