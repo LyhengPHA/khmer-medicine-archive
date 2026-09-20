@@ -77,7 +77,7 @@ a {
   letter-spacing: 0.08em;
 }
 
-.site-header > p,
+.header-right > p,
 .entry-count {
   margin: 0;
   color: var(--faded);
@@ -85,6 +85,52 @@ a {
   font-size: 11px;
   letter-spacing: 0.08em;
   text-transform: uppercase;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.header-auth {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.header-auth-link {
+  color: var(--green);
+  font-family: "Courier New", monospace;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-decoration: underline;
+  text-transform: uppercase;
+}
+
+.header-auth-email {
+  color: var(--faded);
+  font-family: "Courier New", monospace;
+  font-size: 11px;
+  letter-spacing: 0.04em;
+}
+
+.header-auth-button {
+  border: 1px solid var(--green);
+  padding: 6px 12px;
+  background: transparent;
+  color: var(--green);
+  font-family: "Courier New", monospace;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.header-auth-button:hover,
+.header-auth-button:focus-visible {
+  border-color: var(--red);
+  color: var(--red);
 }
 
 .hero {
@@ -629,7 +675,7 @@ a {
     padding-inline: 16px;
   }
 
-  .site-header > p {
+  .header-right > p {
     display: none;
   }
 

@@ -1,15 +1,36 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import EntryCard from "../components/EntryCard.js";
 import collection from "../collection.config.js";
 import entries from "../data/entries.js";
 import { searchEntries } from "../lib/searchEntries.js";
+import { createClient } from "../lib/supabase/client.js";
 
 export default function Home() {
   const [searchTerm, setSearchTerm] = useState("");
+  const [user, setUser] = useState(null);
   const isWhitespaceOnly = searchTerm.length > 0 && searchTerm.trim() === "";
   const filteredEntries = searchEntries(entries, searchTerm);
+
+  useEffect(() => {
+    const supabase = createClient();
+
+    supabase.auth.getUser().then(({ data }) => setUser(data.user ?? null));
+
+    // Keeps the header in sync immediately after login or logout.
+    const { data: subscription } = supabase.auth.onAuthStateChange(
+      (_event, session) => setUser(session?.user ?? null)
+    );
+
+    return () => subscription.subscription.unsubscribe();
+  }, []);
+
+  async function handleLogout() {
+    const supabase = createClient();
+    await supabase.auth.signOut();
+    setUser(null);
+  }
 
   return (
     <>
@@ -18,7 +39,28 @@ export default function Home() {
           <span className="archive-mark">KTM</span>
           <span>{collection.name}</span>
         </a>
-        <p>Community Archive · Cambodia</p>
+        <div className="header-right">
+          <p>Community Archive · Cambodia</p>
+          <div className="header-auth">
+            {user ? (
+              <>
+                <span className="header-auth-email">{user.email}</span>
+                <button className="header-auth-button" onClick={handleLogout}>
+                  Log out
+                </button>
+              </>
+            ) : (
+              <>
+                <a className="header-auth-link" href="/login">
+                  Log in
+                </a>
+                <a className="header-auth-link" href="/signup">
+                  Sign up
+                </a>
+              </>
+            )}
+          </div>
+        </div>
       </header>
 
       <main id="top">
