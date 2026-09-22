@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { createClient } from "../../lib/supabase/client.js";
-import collection from "../../collection.config.js";
+import AuthLeafPanel from "../../components/AuthLeafPanel.js";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -36,10 +36,7 @@ export default function LoginPage() {
   }
 
   return (
-    <main className="auth-page">
-      <div className="auth-card">
-        <p className="eyebrow">{collection.name}</p>
-        <h1>Log in to the archive</h1>
+    <AuthLeafPanel title="Log in to the archive">
 
         {error ? (
           <p className="auth-error" role="alert">
@@ -80,7 +77,6 @@ export default function LoginPage() {
         <p className="auth-switch">
           Need a contributor account? <a href="/signup">Sign up</a>
         </p>
-      </div>
-    </main>
+    </AuthLeafPanel>
   );
 }

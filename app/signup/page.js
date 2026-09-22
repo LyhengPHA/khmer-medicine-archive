@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { createClient } from "../../lib/supabase/client.js";
-import collection from "../../collection.config.js";
+import AuthLeafPanel from "../../components/AuthLeafPanel.js";
 
 // Errors whose text would confirm an email is already registered.
 // These are folded into the generic success message instead of shown,
@@ -40,10 +40,7 @@ export default function SignupPage() {
   }
 
   return (
-    <main className="auth-page">
-      <div className="auth-card">
-        <p className="eyebrow">{collection.name}</p>
-        <h1>Create a contributor account</h1>
+    <AuthLeafPanel title="Create a contributor account">
 
         {isSubmitted ? (
           <p className="auth-success" role="status">
@@ -93,7 +90,6 @@ export default function SignupPage() {
         <p className="auth-switch">
           Already have an account? <a href="/login">Log in</a>
         </p>
-      </div>
-    </main>
+    </AuthLeafPanel>
   );
 }
