@@ -3,15 +3,45 @@
 import { useEffect, useState } from "react";
 import EntryCard from "../components/EntryCard.js";
 import collection from "../collection.config.js";
-import entries from "../data/entries.js";
 import { searchEntries } from "../lib/searchEntries.js";
 import { createClient } from "../lib/supabase/client.js";
 
 export default function Home() {
+  const [entries, setEntries] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [fetchError, setFetchError] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
   const [user, setUser] = useState(null);
   const isWhitespaceOnly = searchTerm.length > 0 && searchTerm.trim() === "";
   const filteredEntries = searchEntries(entries, searchTerm);
+
+  useEffect(() => {
+    let active = true;
+
+    async function loadEntries() {
+      try {
+        const supabase = createClient();
+        const { data, error } = await supabase
+          .from("entries")
+          .select("*")
+          .order("created_at", { ascending: false });
+
+        if (error) throw error;
+        if (active) setEntries(data ?? []);
+      } catch {
+        if (active) {
+          setFetchError("Unable to load archive entries. Please refresh to try again.");
+        }
+      } finally {
+        if (active) setLoading(false);
+      }
+    }
+
+    loadEntries();
+    return () => {
+      active = false;
+    };
+  }, []);
 
   useEffect(() => {
     const supabase = createClient();
@@ -126,7 +156,11 @@ export default function Home() {
               <h2 id="entries-title">First Entries</h2>
             </div>
             <p className="entry-count" aria-live="polite">
-              {String(filteredEntries.length).padStart(2, "0")} records
+              {loading
+                ? "Loading records…"
+                : fetchError
+                  ? "Records unavailable"
+                  : `${String(filteredEntries.length).padStart(2, "0")} records`}
             </p>
           </div>
 
@@ -144,7 +178,15 @@ export default function Home() {
             />
           </div>
 
-          {isWhitespaceOnly ? (
+          {loading ? (
+            <div className="search-empty" role="status">
+              <p>Loading archive entries…</p>
+            </div>
+          ) : fetchError ? (
+            <div className="search-empty" role="alert">
+              <p>{fetchError}</p>
+            </div>
+          ) : isWhitespaceOnly ? (
             <div className="search-empty" id="search-error" role="status">
               <p lang="km">សូមបញ្ចូលពាក្យស្វែងរក មិនមែនតែដកឃ្លាទេ។</p>
               <p>Enter a search term, not just spaces.</p>
