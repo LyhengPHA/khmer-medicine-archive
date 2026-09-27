@@ -1,13 +1,13 @@
 import BilingualDetail from "./BilingualDetail.js";
 
 const details = [
-  ["ingredients", "Ingredients / គ្រឿងផ្សំ"],
-  ["ingredientAmount", "Amount / បរិមាណ"],
-  ["preparation", "Preparation / របៀបរៀបចំ"],
-  ["usage", "Usage / របៀបប្រើ"],
-  ["frequency", "Frequency / ភាពញឹកញាប់"],
-  ["duration", "Duration / រយៈពេល"],
-  ["precautions", "Precautions / ការប្រុងប្រយ័ត្ន"],
+  ["ingredients", "Ingredients", "គ្រឿងផ្សំ"],
+  ["ingredientAmount", "Amount", "បរិមាណ"],
+  ["preparation", "Preparation", "របៀបរៀបចំ"],
+  ["usage", "Usage", "របៀបប្រើ"],
+  ["frequency", "Frequency", "ភាពញឹកញាប់"],
+  ["duration", "Duration", "រយៈពេល"],
+  ["precautions", "Precautions", "ការប្រុងប្រយ័ត្ន"],
 ];
 
 export default function EntryCard({ entry, recordNumber }) {
@@ -21,7 +21,7 @@ export default function EntryCard({ entry, recordNumber }) {
         <span className="entry-title-row">
           <span>
             <span className="entry-category">Traditionally used for</span>
-            <span className="khmer-entry-name" lang="km">{entry.title}</span>
+            <span className="khmer-entry-name" lang="km" role="heading" aria-level={3}>{entry.title}</span>
             <span className="english-name" lang="en">{entry.englishTitle}</span>
           </span>
           <span className="record-stamp">Recorded</span>
@@ -29,8 +29,8 @@ export default function EntryCard({ entry, recordNumber }) {
         <span className="entry-preview" lang="km">{entry.khmerDescription}</span>
         <span className="entry-preview entry-translation" lang="en">{entry.description}</span>
         <span className="entry-toggle-label">
-          <span className="when-closed">View details / មើលព័ត៌មានលម្អិត</span>
-          <span className="when-open">Hide details / លាក់ព័ត៌មានលម្អិត</span>
+          <span className="when-closed">View details / <span lang="km">មើលព័ត៌មានលម្អិត</span></span>
+          <span className="when-open">Hide details / <span lang="km">លាក់ព័ត៌មានលម្អិត</span></span>
           <span className="entry-toggle-icon" aria-hidden="true">+</span>
         </span>
       </summary>
@@ -42,9 +42,9 @@ export default function EntryCard({ entry, recordNumber }) {
         Contributor-reported traditional use; not medical advice.
       </p>
       <div className="entry-details">
-        {details.map(([field, label]) => (
-          <div className={"detail-block" + (field === "usage" || field === "precautions" ? " usage-block" : "")} key={field}>
-            <h4>{label}</h4>
+        {details.map(([field, label, khmerLabel]) => (
+          <div className={"detail-block" + (["preparation", "usage", "precautions"].includes(field) ? " usage-block" : "")} key={field}>
+            <h4>{label} / <span lang="km">{khmerLabel}</span></h4>
             <BilingualDetail khmer={entry[field]} english={entry.english?.[field]} />
           </div>
         ))}

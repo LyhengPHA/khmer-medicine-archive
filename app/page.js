@@ -1,7 +1,8 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import EntryCard from "../components/EntryCard.js";
+import ArchiveHero from "../components/ArchiveHero.js";
 import collection from "../collection.config.js";
 import { searchEntries } from "../lib/searchEntries.js";
 import { createClient } from "../lib/supabase/client.js";
@@ -12,8 +13,14 @@ export default function Home() {
   const [fetchError, setFetchError] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
   const [user, setUser] = useState(null);
+  const searchInput = useRef(null);
   const isWhitespaceOnly = searchTerm.length > 0 && searchTerm.trim() === "";
   const filteredEntries = searchEntries(entries, searchTerm);
+
+  function clearSearch() {
+    setSearchTerm("");
+    searchInput.current?.focus();
+  }
 
   useEffect(() => {
     let active = true;
@@ -63,7 +70,7 @@ export default function Home() {
   }
 
   return (
-    <>
+    <div className="archive-home">
       <header className="site-header">
         <a className="archive-name" href="#top" aria-label="Archive home">
           <span className="archive-mark">KTM</span>
@@ -71,7 +78,7 @@ export default function Home() {
         </a>
         <div className="header-right">
           <p>Community Archive · Cambodia</p>
-          <div className="header-auth">
+          <nav className="header-auth" aria-label="Account">
             {user ? (
               <>
                 <span className="header-auth-email">{user.email}</span>
@@ -89,93 +96,58 @@ export default function Home() {
                 </a>
               </>
             )}
-          </div>
+          </nav>
         </div>
       </header>
 
       <main id="top">
-        <section className="hero page-width" aria-labelledby="hero-title">
-          <div className="hero-copy">
-            <p className="eyebrow">A living record of inherited knowledge</p>
-            <h1 id="hero-title">
-              Preserving Khmer traditional medicine knowledge across
-              generations.
-            </h1>
-            <p className="hero-description">{collection.description}</p>
-          </div>
-          <div className="archive-seal" aria-hidden="true">
-            <span>បណ្ណសារ</span>
-            <strong>ARCHIVE</strong>
-            <small>EST. 2026</small>
-          </div>
-        </section>
+        <ArchiveHero />
 
         <section className="preservation page-width" aria-labelledby="about-title">
-          <p className="section-number">Record note / 01</p>
+          <p className="section-number">Inside the collection</p>
           <div>
-            <h2 id="about-title">About the archive</h2>
+            <h2 id="about-title">Knowledge preserved through generations</h2>
             <p>
-              This archive is organized by health condition and body system.
-              Each entry keeps its ingredients, amount, preparation method,
-              contributor or source, and place. Information not yet documented
-              is left clearly marked.
+              This community archive documents Khmer traditional remedies, their ingredients,
+              preparation methods, and the people and places connected to them.
             </p>
-          </div>
-        </section>
-
-        <section className="provenance" aria-labelledby="provenance-title">
-          <div className="page-width provenance-grid">
-            <div>
-              <p className="eyebrow light">Archive practice</p>
-              <h2 id="provenance-title">Source &amp; provenance</h2>
-            </div>
-            <div className="provenance-copy">
-              <p>
-                Each record keeps its contributor, source, and place visible.
-                Details that have not yet been verified remain clearly marked
-                instead of being assumed.
-              </p>
-              <dl>
-                <div>
-                  <dt>Archive source</dt>
-                  <dd>{collection.source}</dd>
-                </div>
-                <div>
-                  <dt>Archive curator</dt>
-                  <dd>{collection.curator}</dd>
-                </div>
-              </dl>
-            </div>
           </div>
         </section>
 
         <section className="entries page-width" aria-labelledby="entries-title">
           <div className="section-heading">
             <div>
-              <p className="eyebrow">Collection register</p>
-              <h2 id="entries-title">First Entries</h2>
+              <p className="eyebrow">Browse the collection</p>
+              <h2 id="entries-title">Archive entries</h2>
             </div>
             <p className="entry-count" aria-live="polite">
               {loading
                 ? "Loading records…"
                 : fetchError
                   ? "Records unavailable"
-                  : `${String(filteredEntries.length).padStart(2, "0")} records`}
+                  : searchTerm
+                    ? `${filteredEntries.length} of ${entries.length} entries`
+                    : `${entries.length} ${entries.length === 1 ? "entry" : "entries"}`}
             </p>
           </div>
 
           <div className="archive-search" role="search">
-            <label htmlFor="entry-search">Search the archive / ស្វែងរក</label>
-            <input
-              id="entry-search"
-              type="search"
-              value={searchTerm}
-              onChange={(event) => setSearchTerm(event.target.value)}
-              placeholder="Search entry details in Khmer or English"
-              autoComplete="off"
-              aria-invalid={isWhitespaceOnly}
-              aria-describedby={isWhitespaceOnly ? "search-error" : undefined}
-            />
+            <label htmlFor="entry-search">Search the archive / <span lang="km">ស្វែងរក</span></label>
+            <p id="search-help" className="search-help">Use Khmer or English to find names, ingredients, preparation methods, or sources. Results update as you type.</p>
+            <div className="search-controls">
+              <input
+                ref={searchInput}
+                id="entry-search"
+                type="search"
+                value={searchTerm}
+                onChange={(event) => setSearchTerm(event.target.value)}
+                placeholder="Search entry details…"
+                autoComplete="off"
+                aria-invalid={isWhitespaceOnly}
+                aria-describedby={isWhitespaceOnly ? "search-help search-error" : "search-help"}
+              />
+              {searchTerm && <button className="search-clear" type="button" onClick={clearSearch}>Clear search</button>}
+            </div>
           </div>
 
           {loading ? (
@@ -191,6 +163,11 @@ export default function Home() {
               <p lang="km">សូមបញ្ចូលពាក្យស្វែងរក មិនមែនតែដកឃ្លាទេ។</p>
               <p>Enter a search term, not just spaces.</p>
             </div>
+          ) : entries.length === 0 ? (
+            <div className="search-empty" role="status">
+              <p>No archive entries yet.</p>
+              <p>Check back soon to explore the collection.</p>
+            </div>
           ) : filteredEntries.length > 0 ? (
             <div className="entry-list">
               {filteredEntries.map((entry) => (
@@ -205,21 +182,45 @@ export default function Home() {
             <div className="search-empty" role="status">
               <p lang="km">រកមិនឃើញកំណត់ត្រាដែលត្រូវគ្នា។</p>
               <p>
-                No matching archive entries found. Try another Khmer or
-                English search term.
+                No entries match “{searchTerm}”. Try another word or spelling,
+                or clear the search to browse all entries.
               </p>
             </div>
           )}
+        </section>
+        <section className="provenance" aria-labelledby="provenance-title">
+          <div className="page-width provenance-grid">
+            <div>
+              <p className="eyebrow light">About the records</p>
+              <h2 id="provenance-title">Where the records come from</h2>
+            </div>
+            <div className="provenance-copy">
+              <p>
+                Records retain contributor, source, and place information.
+                Details awaiting verification are clearly marked.
+              </p>
+              <dl>
+                <div>
+                  <dt>Archive source</dt>
+                  <dd>{collection.source}</dd>
+                </div>
+                <div>
+                  <dt>Archive curator</dt>
+                  <dd>{collection.curator}</dd>
+                </div>
+              </dl>
+            </div>
+          </div>
         </section>
       </main>
 
       <footer className="site-footer">
         <div className="page-width footer-inner">
           <p>{collection.name}</p>
-          <p>Preserving knowledge with care, context, and clear sources.</p>
+          <p>Keeping knowledge and its sources together.</p>
           <p>Archive prototype · 2026</p>
         </div>
       </footer>
-    </>
+    </div>
   );
 }

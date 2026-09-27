@@ -12,7 +12,7 @@ const collection = {
 
   // One sentence: what is this archive, and why does it matter?
   description:
-    "An archive preserving Khmer traditional medicine knowledge, organized by health condition and body system with formulas, preparation methods, and source records.",
+    "An archive of Khmer traditional medicine knowledge. Browse formulas, preparation methods, and source records by health condition and body system.",
 
   // Who is building this archive? Your name, as you want it shown.
   curator: "To be documented from source",
