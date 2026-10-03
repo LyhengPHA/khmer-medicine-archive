@@ -137,7 +137,7 @@ test("text-only edit trims Khmer, preserves photos and excludes immutable/unreco
   const update = t.calls.find((call) => call.operation === "update").values;
   assert.deepEqual(Object.keys(update).sort(), Array.from(t.validation.fields, (field) => field.name).sort());
   assert.equal(update.title, "ខ្មែរ");
-  assert.equal(update.frequency, "");
+  assert.equal(update.frequency, null);
   assert.deepEqual(Array.from(update.ingredients), ["ខ្មែរ", "ខ្មែរ"]);
   assert.ok(t.calls.every((call) => !["upload", "cleanup"].includes(call.operation)));
 });
@@ -161,6 +161,56 @@ test("all text rules and optional replacement validation run before uploads", as
   }
   assert.ok(t.calls.every((call) => ["auth", "read"].includes(call.operation)));
   assert.ok((await t.validation.validatePhoto(null)).error, "new contributions still require photos");
+});
+
+test("blank optional fields normalize to null", async () => {
+  const t = await setup();
+  const { values, errors } = t.validation.validateContribution(t.form());
+  assert.equal(Object.keys(errors).length, 0);
+  for (const field of t.validation.fields.filter((field) => !field.required)) {
+    assert.equal(values[field.name], null);
+  }
+});
+
+test("non-blank optional fields remain trimmed strings", async () => {
+  const t = await setup();
+  const body = t.form();
+  for (const field of t.validation.fields.filter((field) => !field.required)) {
+    body.set(field.name, "  ខ្មែរ  ");
+  }
+  const { values, errors } = t.validation.validateContribution(body);
+  assert.equal(Object.keys(errors).length, 0);
+  for (const field of t.validation.fields.filter((field) => !field.required)) {
+    assert.equal(values[field.name], "ខ្មែរ");
+  }
+});
+
+test("required strings and arrays remain trimmed and validated", async () => {
+  const t = await setup();
+  const body = t.form();
+  body.set("title", "  ឱសថខ្មែរ  ");
+  body.set("ingredients", "  ស្លឹក  \r\n\n  ឫស  ");
+  let result = t.validation.validateContribution(body);
+  assert.equal(result.values.title, "ឱសថខ្មែរ");
+  assert.deepEqual(Array.from(result.values.ingredients), ["ស្លឹក", "ឫស"]);
+  assert.equal(Object.keys(result.errors).length, 0);
+
+  body.set("title", "   ");
+  body.set("ingredients", " \r\n ");
+  result = t.validation.validateContribution(body);
+  assert.ok(result.errors.title);
+  assert.ok(result.errors.ingredients);
+});
+
+test("over-length optional fields still fail validation", async () => {
+  const t = await setup();
+  for (const field of t.validation.fields.filter((field) => !field.required)) {
+    const body = t.form();
+    body.set(field.name, `  ${"x".repeat(field.max + 1)}  `);
+    const { values, errors } = t.validation.validateContribution(body);
+    assert.equal(values[field.name].length, field.max + 1);
+    assert.ok(errors[field.name]);
+  }
 });
 
 test("replacement uploads with a UUID, then updates, then removes only the old photo", async () => {
