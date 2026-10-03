@@ -4,8 +4,9 @@ import { useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { fields, validateContribution, validatePhoto } from "../lib/contribution.js";
 import ContributionField from "./ContributionField.js";
+import ContributionPhotoField from "./ContributionPhotoField.js";
 
-export default function ContributionForm() {
+export default function ContributionForm({ entry }) {
   const router = useRouter();
   const submitting = useRef(false);
   const [busy, setBusy] = useState(false);
@@ -23,7 +24,7 @@ export default function ContributionForm() {
     try {
       const body = new FormData(form);
       const { errors: invalid } = validateContribution(body);
-      const photo = await validatePhoto(body.get("photo"));
+      const photo = await validatePhoto(body.get("photo"), !entry);
       if (photo.error) invalid.photo = photo.error;
       if (Object.keys(invalid).length) {
         setErrors(invalid);
@@ -31,15 +32,19 @@ export default function ContributionForm() {
         form.elements.namedItem(Object.keys(invalid)[0])?.focus();
         return;
       }
-      const response = await fetch("/api/contribute", { method: "POST", body });
+      const response = await fetch(entry ? `/api/entries/${encodeURIComponent(entry.id)}` : "/api/contribute", {
+        method: entry ? "PATCH" : "POST", body,
+      });
       const result = await response.json();
       if (!response.ok) {
         setErrors(result.errors || {});
         setMessage(result.errors ? "Please check the marked fields." : response.status === 401
-          ? "Please log in again before contributing." : "Could not save your entry. Please try again.");
+          ? "Please log in again before contributing." : response.status === 404
+            ? "This entry is unavailable or you do not have permission to edit it." : "Could not save your entry. Please try again.");
         return;
       }
       router.push(`/entries/${encodeURIComponent(result.id)}`);
+      router.refresh();
     } catch (error) {
       console.error("Contribution request failed", error);
       setMessage("Could not reach the archive. Check your connection and try again.");
@@ -53,15 +58,9 @@ export default function ContributionForm() {
     <form onSubmit={handleSubmit} noValidate aria-busy={busy}>
       <p>Fields marked * are required. Khmer and English text are welcome.</p>
       <fieldset disabled={busy} className="contribution-fields">
-        {fields.map((field) => <ContributionField key={field.name} field={field} error={errors[field.name]} />)}
-        <div className="auth-field">
-          <label htmlFor="photo">Photo *</label>
-          <p className="field-hint" id="photo-hint">JPEG, PNG, or WebP. Maximum 5 MB (5242880 bytes).</p>
-          <input type="file" id="photo" name="photo" accept="image/jpeg,image/png,image/webp" required
-            aria-invalid={Boolean(errors.photo)} aria-describedby="photo-hint photo-error" />
-          <span className="auth-error" id="photo-error">{errors.photo}</span>
-        </div>
-        <button className="auth-submit" type="submit" disabled={busy}>{busy ? "Saving entry…" : "Save entry"}</button>
+        {fields.map((field) => <ContributionField key={field.name} field={field} error={errors[field.name]} value={entry?.[field.name]} />)}
+        <ContributionPhotoField entry={entry} error={errors.photo} />
+        <button className="auth-submit" type="submit" disabled={busy}>{busy ? "Saving entry…" : entry ? "Save changes" : "Save entry"}</button>
       </fieldset>
       <p role="alert" className="auth-error">{message}</p>
     </form>

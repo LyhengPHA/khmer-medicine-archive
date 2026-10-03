@@ -1,4 +1,4 @@
-export default function ContributionField({ field, error }) {
+export default function ContributionField({ field, error, value }) {
   const Tag = field.multiline ? "textarea" : "input";
   return (
     <div className="auth-field">
@@ -8,6 +8,7 @@ export default function ContributionField({ field, error }) {
           : `${field.required ? "1–" : "Maximum "}${field.max} characters.`}
       </p>
       <Tag id={field.name} name={field.name} required={field.required} rows={field.multiline ? 4 : undefined}
+        defaultValue={Array.isArray(value) ? value.join("\n") : value ?? ""}
         aria-invalid={Boolean(error)} aria-describedby={`${field.name}-hint ${field.name}-error`} />
       <span className="auth-error" id={`${field.name}-error`}>{error}</span>
     </div>
