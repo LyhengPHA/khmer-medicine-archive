@@ -79,6 +79,7 @@ export default function Home() {
         <div className="header-right">
           <p>Community Archive · Cambodia</p>
           <nav className="header-auth" aria-label="Account">
+            <a className="header-auth-link" href="/contribute">Contribute</a>
             {user ? (
               <>
                 <span className="header-auth-email">{user.email}</span>

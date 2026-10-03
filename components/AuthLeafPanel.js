@@ -6,7 +6,7 @@ export default function AuthLeafPanel({ title, children }) {
       <section className="auth-leaf" aria-labelledby="auth-heading">
         <svg
           className="auth-leaf-art"
-          viewBox="-20 0 760 900"
+          viewBox="0 0 800 700"
           preserveAspectRatio="none"
           aria-hidden="true"
           focusable="false"
@@ -18,31 +18,21 @@ export default function AuthLeafPanel({ title, children }) {
               <stop offset="100%" stopColor="#c0cea3" />
             </linearGradient>
           </defs>
-          <g transform="rotate(35 360 450) translate(0 -54) scale(1 1.12)">
+          <path d="M95 650 Q76 670 52 682" fill="none" stroke="#a6b58b" strokeWidth="7" strokeLinecap="round" />
           <path
-            d="M310 838 Q292 864 270 882"
-            fill="none"
-            stroke="#a6b58b"
-            strokeWidth="7"
-            strokeLinecap="round"
-          />
-          <path
-            d="M430 16 C340 95 40 92 20 350 C0 590 94 741 310 838 C382 772 665 770 700 510 C733 272 548 132 430 16Z"
+            d="M780 20 C690 128 446 -30 228 55 C62 116 4 294 40 452 C65 552 118 599 95 650 C258 635 509 735 667 604 C806 488 817 214 780 20Z"
             fill="url(#leaf-paper)"
             stroke="#a6b58b"
             strokeWidth="1.5"
           />
           <g fill="none" stroke="#61794b" strokeLinecap="round">
-            <path d="M310 838 C454 618 271 308 430 16" strokeWidth="2" opacity="0.18" />
+            <path d="M95 650 C260 510 526 299 780 20" strokeWidth="2" opacity="0.18" />
             <g strokeWidth="1.2" opacity="0.12">
-              <path d="M362 705 Q201 683 79 585 M370 566 Q178 533 37 408" />
-              <path d="M360 426 Q189 384 70 266 M360 289 Q235 255 171 165" />
-              <path d="M378 160 Q314 142 288 108" />
-              <path d="M362 705 Q521 655 648 567 M370 566 Q558 499 685 390" />
-              <path d="M360 426 Q539 366 623 262 M360 289 Q477 242 532 155" />
-              <path d="M378 160 Q434 129 454 76" />
+              <path d="M200 562 Q100 453 65 343 M318 461 Q165 342 152 135" />
+              <path d="M438 352 Q303 235 327 55 M562 229 Q452 135 492 73" />
+              <path d="M200 562 Q330 646 468 652 M318 461 Q497 588 639 569" />
+              <path d="M438 352 Q624 455 750 398 M562 229 Q693 297 778 218" />
             </g>
-          </g>
           </g>
         </svg>
         <div className="auth-card">

@@ -1,4 +1,5 @@
 import BilingualDetail from "./BilingualDetail.js";
+import EntryPhoto from "./EntryPhoto.js";
 
 const details = [
   ["ingredients", "Ingredients", "គ្រឿងផ្សំ"],
@@ -10,9 +11,9 @@ const details = [
   ["precautions", "Precautions", "ការប្រុងប្រយ័ត្ន"],
 ];
 
-export default function EntryCard({ entry, recordNumber }) {
+export default function EntryCard({ entry, recordNumber, defaultOpen = false }) {
   return (
-    <details className="entry-card">
+    <details className="entry-card" open={defaultOpen || undefined}>
       <summary className="entry-toggle">
         <span className="entry-card-topline">
           <span>Condition / body system record</span>
@@ -42,6 +43,7 @@ export default function EntryCard({ entry, recordNumber }) {
         Contributor-reported traditional use; not medical advice.
       </p>
       <div className="entry-details">
+        <EntryPhoto entry={entry} />
         {details.map(([field, label, khmerLabel]) => (
           <div className={"detail-block" + (["preparation", "usage", "precautions"].includes(field) ? " usage-block" : "")} key={field}>
             <h4>{label} / <span lang="km">{khmerLabel}</span></h4>
@@ -61,6 +63,8 @@ export default function EntryCard({ entry, recordNumber }) {
           </div>
         ))}
       </dl>
+      {entry.story && <div className="translation-note"><h4>Story</h4><p>{entry.story}</p></div>}
+      {entry.id && <p className="translation-note"><a href={`/entries/${encodeURIComponent(entry.id)}`}>Open entry page</a></p>}
     </details>
   );
 }
