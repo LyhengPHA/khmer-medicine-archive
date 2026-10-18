@@ -9,12 +9,12 @@ export async function POST(request) {
   try {
     // Cookie-authenticated writes must originate from this site.
     if (request.headers.get("origin") !== new URL(request.url).origin) {
-      return Response.json({ error: "Refresh the page and try again." }, { status: 403 });
+      return Response.json({ error: "សូមផ្ទុកទំព័រឡើងវិញ ហើយព្យាយាមម្តងទៀត។ / Refresh the page and try again." }, { status: 403 });
     }
     supabase = await createClient();
     const { data: { user }, error: authError } = await supabase.auth.getUser();
     if (authError) console.error("Contribution authentication failed", authError);
-    if (!user || authError) return Response.json({ error: "Please log in again before contributing." }, { status: 401 });
+    if (!user || authError) return Response.json({ error: "សូមចូលគណនីម្តងទៀតដើម្បីបញ្ចូលកំណត់ត្រា។ / Log in again to contribute." }, { status: 401 });
     const form = await request.formData();
     const { values: v, errors } = validateContribution(form);
     const photo = form.get("photo");
@@ -50,7 +50,9 @@ export async function POST(request) {
     return Response.json({ id: data.id }, { status: 201 });
   } catch (error) {
     console.error(`Contribution ${stage} failed`, error);
-    return Response.json({ error: stage === "upload" ? "Photo upload failed. Please try again." : "Could not save your entry. Please try again." }, { status: 500 });
+    return Response.json({ error: stage === "upload"
+      ? "បង្ហោះរូបថតមិនបាន។ សូមព្យាយាមម្តងទៀត។ / Photo upload failed. Try again."
+      : "មិនអាចរក្សាទុកកំណត់ត្រាបាន។ សូមព្យាយាមម្តងទៀត។ / Could not save the entry. Try again." }, { status: 500 });
   } finally {
     if (uploadedPath && !saved) {
       try {

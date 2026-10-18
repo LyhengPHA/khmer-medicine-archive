@@ -2,16 +2,16 @@ import { createClient } from "../../../../lib/supabase/server.js";
 import { validateContribution, validatePhoto } from "../../../../lib/contribution.js";
 import { ownedPhotoPath, removePhoto } from "../../../../lib/entryPhotos.js";
 
-const unavailable = () => Response.json({ error: "Entry unavailable or permission denied." }, { status: 404 });
+const unavailable = () => Response.json({ error: "មិនអាចប្រើកំណត់ត្រា ឬគ្មានសិទ្ធិ។ / Entry unavailable or permission denied." }, { status: 404 });
 
 async function authorize(request, params) {
   if (request.headers.get("origin") !== new URL(request.url).origin) {
-    return { response: Response.json({ error: "Refresh the page and try again." }, { status: 403 }) };
+    return { response: Response.json({ error: "សូមផ្ទុកទំព័រឡើងវិញ ហើយព្យាយាមម្តងទៀត។ / Refresh the page and try again." }, { status: 403 }) };
   }
   const supabase = await createClient();
   const { data: { user }, error } = await supabase.auth.getUser();
   if (error) console.error("Entry authentication failed", error);
-  if (error || !user) return { response: Response.json({ error: "Please log in again." }, { status: 401 }) };
+  if (error || !user) return { response: Response.json({ error: "សូមចូលគណនីម្តងទៀត។ / Please log in again." }, { status: 401 }) };
   const { id } = await params;
   const { data: entry, error: readError } = await supabase.from("entries").select("*")
     .eq("id", id).eq("owner", user.id).maybeSingle();
@@ -65,7 +65,7 @@ export async function PATCH(request, { params }) {
     return Response.json({ id: data.id });
   } catch (error) {
     console.error("Entry update failed", error);
-    return Response.json({ error: "Could not save your changes. Please try again." }, { status: 500 });
+    return Response.json({ error: "មិនអាចរក្សាទុកការកែប្រែបាន។ សូមព្យាយាមម្តងទៀត។ / Could not save changes. Try again." }, { status: 500 });
   } finally {
     if (uploadedPath && !saved) await removePhoto(supabase, uploadedPath);
   }

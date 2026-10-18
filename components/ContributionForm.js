@@ -28,7 +28,7 @@ export default function ContributionForm({ entry }) {
       if (photo.error) invalid.photo = photo.error;
       if (Object.keys(invalid).length) {
         setErrors(invalid);
-        setMessage("Please check the marked fields.");
+        setMessage("សូមពិនិត្យប្រអប់ដែលបានសម្គាល់។ / Check the marked fields.");
         form.elements.namedItem(Object.keys(invalid)[0])?.focus();
         return;
       }
@@ -38,16 +38,17 @@ export default function ContributionForm({ entry }) {
       const result = await response.json();
       if (!response.ok) {
         setErrors(result.errors || {});
-        setMessage(result.errors ? "Please check the marked fields." : response.status === 401
-          ? "Please log in again before contributing." : response.status === 404
-            ? "This entry is unavailable or you do not have permission to edit it." : "Could not save your entry. Please try again.");
+        setMessage(result.errors ? "សូមពិនិត្យប្រអប់ដែលបានសម្គាល់។ / Check the marked fields." : response.status === 401
+          ? "សូមចូលគណនីម្តងទៀតដើម្បីបញ្ចូលកំណត់ត្រា។ / Log in again to contribute." : response.status === 404
+            ? "មិនអាចប្រើកំណត់ត្រានេះ ឬអ្នកគ្មានសិទ្ធិកែ។ / Entry unavailable or you cannot edit it."
+            : "មិនអាចរក្សាទុកបាន។ សូមព្យាយាមម្តងទៀត។ / Could not save. Try again.");
         return;
       }
       router.push(`/entries/${encodeURIComponent(result.id)}`);
       router.refresh();
     } catch (error) {
       console.error("Contribution request failed", error);
-      setMessage("Could not reach the archive. Check your connection and try again.");
+      setMessage("មិនអាចភ្ជាប់ទៅបណ្ណសារបាន។ សូមពិនិត្យអ៊ីនធឺណិត ហើយព្យាយាមម្តងទៀត។ / Could not reach the archive. Check your connection and try again.");
     } finally {
       submitting.current = false;
       setBusy(false);
@@ -56,11 +57,11 @@ export default function ContributionForm({ entry }) {
 
   return (
     <form onSubmit={handleSubmit} noValidate aria-busy={busy}>
-      <p>Fields marked * are required. Khmer and English text are welcome.</p>
+      <p>សញ្ញា * បង្ហាញថាត្រូវបំពេញ។ អាចប្រើអក្សរខ្មែរ និងអង់គ្លេស។ / * means required. Khmer and English welcome.</p>
       <fieldset disabled={busy} className="contribution-fields">
         {fields.map((field) => <ContributionField key={field.name} field={field} error={errors[field.name]} value={entry?.[field.name]} />)}
         <ContributionPhotoField entry={entry} error={errors.photo} />
-        <button className="auth-submit" type="submit" disabled={busy}>{busy ? "Saving entry…" : entry ? "Save changes" : "Save entry"}</button>
+        <button className="auth-submit" type="submit" disabled={busy}>{busy ? "កំពុងរក្សាទុក… / Saving…" : entry ? "រក្សាទុកការកែប្រែ / Save changes" : "រក្សាទុកកំណត់ត្រា / Save entry"}</button>
       </fieldset>
       <p role="alert" className="auth-error">{message}</p>
     </form>

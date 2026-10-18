@@ -13,8 +13,8 @@ export default async function ContributePage() {
     user = data?.user;
   } catch (error) { console.error("Contribution user lookup failed", error); }
   return (
-    <ArchivePage title="Contribute an entry">
-      {user ? <ContributionForm /> : <p>Please <a href="/login">log in</a> to contribute an entry.</p>}
+    <ArchivePage title="បញ្ចូលកំណត់ត្រា / Contribute an entry">
+      {user ? <ContributionForm /> : <p><a href="/login">សូមចូលគណនី / Please log in</a> ដើម្បីបញ្ចូលកំណត់ត្រា / to contribute an entry.</p>}
     </ArchivePage>
   );
 }
