@@ -15,10 +15,10 @@ const collection = {
     "An archive of Khmer traditional medicine knowledge. Browse formulas, preparation methods, and source records by health condition and body system.",
 
   // Who is building this archive? Your name, as you want it shown.
-  curator: "To be documented from source",
+  curator: "Lyheng PHA",
 
   // Where does your knowledge come from? A person, a place, a community.
-  source: "To be documented from source",
+  source: "Neang Sokcheang, a traditional medicine practitioner in Phnom Penh, Cambodia.",
 };
 
 export default collection;

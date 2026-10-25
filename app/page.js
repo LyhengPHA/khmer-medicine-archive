@@ -29,9 +29,10 @@ export default function Home() {
       try {
         const supabase = createClient();
         const { data, error } = await supabase
-          .from("entries")
-          .select("*")
-          .order("created_at", { ascending: false });
+        .from("entries")
+        .select("*")
+        .eq("status", "published")
+        .order("created_at", { ascending: false });
 
         if (error) throw error;
         if (active) setEntries(data ?? []);
@@ -79,8 +80,10 @@ export default function Home() {
         <div className="header-right">
           <p>Community Archive · Cambodia</p>
           <nav className="header-auth" aria-label="Account">
+            <a className="header-auth-link" href="/contribute">Contribute</a>
             {user ? (
               <>
+                <a className="header-auth-link" href="/my-entries">My entries</a>
                 <span className="header-auth-email">{user.email}</span>
                 <button className="header-auth-button" onClick={handleLogout}>
                   Log out
