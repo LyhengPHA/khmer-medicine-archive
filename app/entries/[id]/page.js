@@ -24,8 +24,36 @@ export default async function EntryPage({ params }) {
     return <ArchivePage title="Entry unavailable"><p>Could not load this entry. Please refresh to try again.</p></ArchivePage>;
   }
   if (!entry) notFound();
-  return (
+    return (
     <ArchivePage title={entry.title}>
+      <div role="status">
+        <p>
+          <strong>
+            {{
+              pending: "កំពុងរង់ចាំការពិនិត្យ / Waiting for review",
+              published: "បានផ្សព្វផ្សាយ / Published",
+              returned: "ត្រូវកែសម្រួល / Returned for changes",
+            }[entry.status]}
+          </strong>
+        </p>
+
+        {entry.status === "pending" && (
+          <p>
+            កំណត់ត្រានេះកំពុងរង់ចាំការពិនិត្យ ហើយមិនទាន់បង្ហាញជាសាធារណៈទេ។
+            {" / "}
+            This entry is waiting for review and is not public yet.
+          </p>
+        )}
+
+        {entry.status === "returned" && (
+          <p>
+            សូមកែសម្រួលកំណត់ត្រានេះ មុននឹងដាក់ស្នើម្តងទៀត។
+            {" / "}
+            Please revise this entry before submitting it again.
+          </p>
+        )}
+      </div>
+
       {isOwner && <EntryOwnerControls id={entry.id} />}
       <EntryCard entry={entry} recordNumber={1} defaultOpen />
     </ArchivePage>

@@ -44,6 +44,9 @@ export async function PATCH(request, { params }) {
       frequency: v.frequency, duration: v.duration, englishTitle: v.englishTitle,
       khmerDescription: v.khmerDescription, learnedFrom: v.learnedFrom, story: v.story,
     };
+    const { data: isReviewer, error: reviewerError } = await supabase.rpc("is_reviewer");
+    if (reviewerError) throw reviewerError;
+    if (isReviewer !== true) update.status = "pending";
     if (extension) {
       const path = `${user.id}/${crypto.randomUUID()}.${extension}`;
       const { error } = await supabase.storage.from("photos").upload(path, photo, { contentType: photo.type, upsert: false });
