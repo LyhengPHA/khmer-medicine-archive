@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import EntryCard from "../components/EntryCard.js";
+import EntryTree from "../components/EntryTree.js";
 import ArchiveHero from "../components/ArchiveHero.js";
 import collection from "../collection.config.js";
 import { searchEntries } from "../lib/searchEntries.js";
@@ -169,15 +169,7 @@ export default function Home() {
               <p>Check back soon to explore the collection.</p>
             </div>
           ) : filteredEntries.length > 0 ? (
-            <div className="entry-list">
-              {filteredEntries.map((entry) => (
-                <EntryCard
-                  key={entry.slug}
-                  entry={entry}
-                  recordNumber={entries.indexOf(entry) + 1}
-                />
-              ))}
-            </div>
+            <EntryTree entries={filteredEntries} allEntries={entries} />
           ) : (
             <div className="search-empty" role="status">
               <p lang="km">រកមិនឃើញកំណត់ត្រាដែលត្រូវគ្នា។</p>

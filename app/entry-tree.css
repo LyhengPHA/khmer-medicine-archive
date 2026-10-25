@@ -1,0 +1,138 @@
+/* The experiment stays inside this feature; the rest of the archive keeps its styles. */
+.archive-tree {
+  --tree-bark: #9c8764;
+  --tree-leaf: #849a67;
+  --tree-twine: #c5b38b;
+}
+
+.archive-tree-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  padding: 10px 2px 24px;
+}
+
+.archive-tree-heading .eyebrow { margin-bottom: 7px; }
+.archive-tree-intro { margin: 0; font-family: var(--display-font); font-size: 30px; color: #f2ebdc; }
+.tree-motion-button {
+  flex-shrink: 0;
+  min-height: 44px;
+  border: 1px solid #91a18a;
+  border-radius: 24px;
+  padding: 9px 16px;
+  background: #1b382e;
+  color: #f0eadc;
+  font: inherit;
+  font-size: 14px;
+  cursor: pointer;
+}
+.tree-motion-button:hover { background: #315143; }
+.tree-motion-button:focus-visible { outline: 2px solid #d7bf84; outline-offset: 4px; }
+
+.archive-tree-scene { position: relative; isolation: isolate; }
+.archive-tree-art { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: -1; }
+.tree-ground { fill: #849a67; opacity: 0.16; }
+.tree-wood { fill: var(--tree-bark); stroke: var(--tree-bark); stroke-linecap: round; }
+.tree-wood path:not(:first-child) { fill: none; }
+.tree-leaf { fill: var(--tree-leaf); opacity: 0.9; }
+.tree-leaf-1 { fill: #a2b77e; }
+.tree-leaf-2 { fill: #627e53; }
+.tree-leaf-3 { fill: #bdc993; }
+.tree-crown { transform-box: fill-box; transform-origin: 50% 85%; animation: archive-crown-sway 9s ease-in-out infinite alternate; }
+
+.archive-tree-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-items: start;
+  gap: 75px 16%;
+  padding: 230px 22px 145px;
+}
+.entry-hanger {
+  position: relative;
+  min-width: 0;
+  transform-origin: 50% 0;
+  animation: archive-card-sway var(--swing-duration) ease-in-out infinite alternate;
+  animation-delay: var(--swing-delay);
+}
+.entry-hanger:nth-child(even) { margin-top: 90px; }
+.entry-string { display: block; position: relative; width: 2px; height: 65px; margin: auto; background: var(--tree-twine); }
+.entry-string::after {
+  content: "";
+  position: absolute;
+  bottom: -9px;
+  left: -5px;
+  width: 12px;
+  height: 12px;
+  z-index: 1;
+  border: 2px solid var(--tree-twine);
+  border-radius: 50%;
+  background: var(--paper-light);
+}
+.archive-tree .entry-card { border-radius: 5px 5px 14px 14px; padding: 25px 24px 0; }
+.archive-tree .entry-title-row { gap: 12px; }
+.archive-tree .entry-card:not([open]) .entry-preview {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+}
+.archive-tree .entry-card-topline { font-size: 11px; gap: 10px; }
+.archive-tree .record-stamp { display: none; }
+.entry-hanger:hover,
+.entry-hanger:focus-within,
+.entry-hanger:has(.entry-card[open]) { animation: none; transform: none; }
+.entry-hanger:has(.entry-card[open]) { grid-column: 1 / -1; margin-top: 0; }
+.entry-hanger:has(.entry-card[open]) .entry-string { height: 40px; }
+
+.tree-falling-leaves { position: absolute; inset: 0; overflow: hidden; pointer-events: none; z-index: -1; }
+.tree-falling-leaf {
+  position: absolute;
+  top: 100px;
+  width: 12px;
+  height: 23px;
+  border-radius: 95% 0 95% 0;
+  background: #a6b77f;
+  opacity: 0;
+  animation: archive-leaf-fall var(--fall-duration) linear infinite;
+  animation-delay: var(--fall-delay);
+}
+.archive-tree-roots { position: absolute; bottom: 1px; left: 0; right: 0; text-align: center; margin: 0; color: #c6cdbd; font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; }
+.archive-tree-paused .entry-hanger,
+.archive-tree-paused .tree-crown,
+.archive-tree-paused .tree-falling-leaf { animation-play-state: paused; }
+
+@keyframes archive-card-sway {
+  from { transform: rotate(var(--swing-angle)); }
+  to { transform: rotate(calc(var(--swing-angle) * -1)); }
+}
+@keyframes archive-crown-sway { from { transform: rotate(-0.3deg); } to { transform: rotate(0.3deg); } }
+@keyframes archive-leaf-fall {
+  0% { transform: translate(0, 0) rotate(0deg); opacity: 0; }
+  8% { opacity: 0.7; }
+  40% { transform: translate(35px, 320px) rotate(130deg); }
+  75% { transform: translate(-15px, 620px) rotate(240deg); opacity: 0.5; }
+  100% { transform: translate(40px, 900px) rotate(350deg); opacity: 0; }
+}
+
+@media (max-width: 760px) {
+  .archive-tree-grid { grid-template-columns: minmax(0, 1fr); padding: 230px 6px 125px 62px; gap: 55px; }
+  .entry-hanger:nth-child(even) { margin-top: 0; }
+  .archive-tree .entry-card { padding: 20px 16px 0; }
+  .archive-tree .entry-toggle .khmer-entry-name { font-size: 27px; }
+  .archive-tree .entry-toggle-label { padding: 10px; font-size: 14px; gap: 8px; }
+  .archive-tree .entry-card-topline { flex-wrap: wrap; gap: 4px; }
+  .archive-tree .entry-title-row { padding-block: 17px; }
+  .archive-tree .entry-preview { font-size: 17px; }
+  .archive-tree .entry-preview.entry-translation { font-size: 15px; }
+  .archive-tree-intro { font-size: 25px; }
+  .archive-tree-heading { align-items: flex-start; flex-wrap: wrap; gap: 12px; }
+  .archive-tree .entry-hanger:has(.entry-card[open]) { margin-left: -55px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .archive-tree .entry-hanger,
+  .archive-tree .tree-crown,
+  .archive-tree .tree-falling-leaf { animation: none; }
+  .archive-tree .tree-motion-button { display: none; }
+}

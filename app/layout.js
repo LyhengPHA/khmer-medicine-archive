@@ -1,6 +1,7 @@
 import collection from "../collection.config.js";
 import localFont from "next/font/local";
 import "./globals.css";
+import "./entry-tree.css";
 
 const khmerFont = localFont({
   src: "../public/fonts/NotoSansKhmer-Variable.ttf",
