@@ -83,7 +83,7 @@ export default function Home() {
             <a className="header-auth-link" href="/contribute">Contribute</a>
             {user ? (
               <>
-                <a className="header-auth-link" href="/my-entries">My entries</a>
+                <a className="header-auth-link" href="/my-entries">កំណត់ត្រារបស់ខ្ញុំ / My entries</a>
                 <span className="header-auth-email">{user.email}</span>
                 <button className="header-auth-button" onClick={handleLogout}>
                   Log out

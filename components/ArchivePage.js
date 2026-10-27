@@ -14,7 +14,7 @@ export default async function ArchivePage({ title, children }) {
         <a className="archive-name" href="/">{collection.name}</a>
         <nav className="header-auth">
           <a href="/">Browse archive</a><a href="/contribute">Contribute</a>
-          {user && <a href="/my-entries">My entries</a>}
+          {user && <a href="/my-entries">កំណត់ត្រារបស់ខ្ញុំ / My entries</a>}
         </nav>
       </header>
       <main className="page-width contribution-page">
