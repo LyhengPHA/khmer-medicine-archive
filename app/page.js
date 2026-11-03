@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import EntryTree from "../components/EntryTree.js";
 import ArchiveHero from "../components/ArchiveHero.js";
+import ReviewerLink from "../components/ReviewerLink.js";
 import collection from "../collection.config.js";
 import { searchEntries } from "../lib/searchEntries.js";
 import { createClient } from "../lib/supabase/client.js";
@@ -81,6 +82,7 @@ export default function Home() {
           <p>Community Archive · Cambodia</p>
           <nav className="header-auth" aria-label="Account">
             <a className="header-auth-link" href="/contribute">Contribute</a>
+            <ReviewerLink user={user} />
             {user ? (
               <>
                 <a className="header-auth-link" href="/my-entries">កំណត់ត្រារបស់ខ្ញុំ / My entries</a>
