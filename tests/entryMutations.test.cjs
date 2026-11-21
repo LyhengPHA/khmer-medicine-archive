@@ -20,6 +20,15 @@ async function setup(options = {}) {
       calls.push({ operation: "auth" });
       return { data: { user: options.loggedOut ? null : { id: owner } }, error: options.authError };
     } },
+    async rpc(name, args) {
+      assert.equal(name, "is_reviewer");
+      assert.equal(args, undefined);
+      calls.push({ operation: "reviewer" });
+      return {
+        data: options.reviewerError ? null : options.reviewer === true,
+        error: options.reviewerError,
+      };
+    },
     from(table) {
       assert.equal(table, "entries");
       const call = { operation: "read", filters: {} };
@@ -31,7 +40,8 @@ async function setup(options = {}) {
         async maybeSingle() {
           calls.push(call);
           if (call.operation === "read") return { data: options.notOwner ? null : {
-            id, owner, photo_url: options.oldUrl ?? photoPrefix + oldPath, photoAvailable: true,
+            id, owner, status: options.status ?? "published",
+            photo_url: options.oldUrl ?? photoPrefix + oldPath, photoAvailable: true,
           } };
           return { data: options.zeroRows ? null : { id }, error: options.writeError };
         },
@@ -135,11 +145,29 @@ test("text-only edit trims Khmer, preserves photos and excludes immutable/unreco
   body.set("photo", new File([], "", { type: "application/octet-stream" }));
   assert.equal((await t.run("PATCH", body)).status, 200);
   const update = t.calls.find((call) => call.operation === "update").values;
-  assert.deepEqual(Object.keys(update).sort(), Array.from(t.validation.fields, (field) => field.name).sort());
+  assert.deepEqual(Object.keys(update).sort(), [...Array.from(t.validation.fields, (field) => field.name), "status"].sort());
   assert.equal(update.title, "ខ្មែរ");
   assert.equal(update.frequency, null);
+  assert.equal(update.status, "pending");
   assert.deepEqual(Array.from(update.ingredients), ["ខ្មែរ", "ខ្មែរ"]);
   assert.ok(t.calls.every((call) => !["upload", "cleanup"].includes(call.operation)));
+});
+
+test("reviewer edits preserve status", async () => {
+  const t = await setup({ reviewer: true, status: "published" });
+  assert.equal((await t.run("PATCH")).status, 200);
+  assert.deepEqual(t.calls.map((call) => call.operation), ["auth", "read", "reviewer", "update"]);
+  const update = t.calls.find((call) => call.operation === "update").values;
+  assert.equal(Object.hasOwn(update, "status"), false);
+});
+
+test("reviewer RPC failures fail closed before uploads or writes", async () => {
+  const t = await setup({ reviewerError: new Error("private reviewer detail") });
+  const response = await t.run("PATCH", addPhoto(t.form()));
+  assert.equal(response.status, 500);
+  assert.ok(!(await response.text()).includes("private reviewer detail"));
+  assert.deepEqual(t.calls.map((call) => call.operation), ["auth", "read", "reviewer"]);
+  assert.ok(t.logs.length);
 });
 
 test("all text rules and optional replacement validation run before uploads", async () => {
@@ -216,19 +244,20 @@ test("over-length optional fields still fail validation", async () => {
 test("replacement uploads with a UUID, then updates, then removes only the old photo", async () => {
   const t = await setup();
   assert.equal((await t.run("PATCH", addPhoto(t.form()))).status, 200);
-  assert.deepEqual(t.calls.map((call) => call.operation), ["auth", "read", "upload", "update", "cleanup"]);
-  const upload = t.calls[2];
+  assert.deepEqual(t.calls.map((call) => call.operation), ["auth", "read", "reviewer", "upload", "update", "cleanup"]);
+  const upload = t.calls[3];
   assert.match(upload.path, /^authenticated-owner\/[0-9a-f-]{36}\.jpg$/);
   assert.equal(upload.config.upsert, false);
-  assert.equal(t.calls[3].values.photo_url, photoPrefix + upload.path);
-  assert.equal(t.calls[3].values.photoAvailable, true);
-  assert.deepEqual(t.calls[4].paths, [oldPath]);
+  assert.equal(t.calls[4].values.photo_url, photoPrefix + upload.path);
+  assert.equal(t.calls[4].values.photoAvailable, true);
+  assert.equal(t.calls[4].values.status, "pending");
+  assert.deepEqual(t.calls[5].paths, [oldPath]);
 });
 
 test("upload failure leaves the entry and old photo untouched", async () => {
   const t = await setup({ uploadError: new Error("upload rejected") });
   assert.equal((await t.run("PATCH", addPhoto(t.form()))).status, 500);
-  assert.deepEqual(t.calls.map((call) => call.operation), ["auth", "read", "upload"]);
+  assert.deepEqual(t.calls.map((call) => call.operation), ["auth", "read", "reviewer", "upload"]);
 });
 
 test("cleanup errors are logged without turning successful writes into failures", async () => {
