@@ -1158,27 +1158,63 @@ a {
 .archive-home .footer-inner p { color: #c2c7b7; }
 
 @media (max-width: 760px) {
-  .archive-home .site-header { padding: 14px 20px; gap: 6px; }
+  /* Natural header height accommodates every account role without covering the hero. */
+  .archive-home .site-header { position: relative; inset: auto; min-height: 0; padding: 10px 16px; gap: 8px; }
   .archive-home .archive-name { font-size: 11px; gap: 10px; letter-spacing: 0.025em; }
-  .archive-home .header-right { width: auto; margin-left: auto; }
-  .archive-home .header-auth { width: auto; gap: 6px; }
-  .archive-home .header-auth-link { padding-inline: 12px; font-size: 14px; }
-  .archive-home .header-auth-email { max-width: 180px; font-size: 12px; }
-  .archive-home .hero-content { min-height: 85svh; padding-block: 185px 90px; }
-  .archive-home .hero h1 { font-size: clamp(46px, 8vw, 62px); }
+  .archive-home .archive-name { min-width: 0; overflow-wrap: anywhere; }
+  .archive-home .archive-mark { width: 36px; height: 36px; }
+  .archive-home .header-right { width: 100%; margin-left: 0; }
+  .archive-home .header-auth { width: 100%; gap: 6px; }
+  .archive-home .header-auth a,
+  .archive-home .header-auth-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: 1 1 auto;
+    min-width: 0;
+    min-height: 44px;
+    padding: 6px 10px;
+    border: 1px solid #a7ae97;
+    border-radius: 6px;
+    color: #f0eadc;
+    background: transparent;
+    font: inherit;
+    font-size: 14px;
+    line-height: 1.8;
+    text-align: center;
+    text-decoration: none;
+    overflow-wrap: anywhere;
+  }
+  .archive-home .header-auth a:hover,
+  .archive-home .header-auth-button:hover { background: #f0eadc; color: #102b24; }
+  .archive-home .header-auth-link[href="/signup"] { border-radius: 6px; border-color: #a7ae97; }
+  .archive-home .header-auth-email { order: 1; flex-basis: 100%; max-width: none; font-size: 12px; line-height: 1.5; color: #c3cbba; }
+  .archive-home .hero-content { min-height: 0; padding-block: 28px 20px; }
+  .archive-home .hero h1 { font-size: clamp(38px, 9vw, 52px); line-height: 1.12; }
   .archive-home .hero-image { object-position: 61% center; }
   .archive-home .hero-shade {
     background: linear-gradient(90deg, rgba(7, 29, 23, 0.86), rgba(7, 29, 23, 0.4)),
       linear-gradient(0deg, #102b24, transparent 45%);
   }
-  .archive-home .hero-description { font-size: 17px; margin-top: 24px; }
-  .archive-home .hero .eyebrow { font-size: 10px; letter-spacing: 0.1em; }
-  .archive-home .hero-caption { left: 0; right: auto; font-size: 10px; }
-  .archive-home .preservation { padding-block: 46px; gap: 20px; }
+  .archive-home .hero-description { font-size: 16px; margin-top: 16px; line-height: 1.75; }
+  .archive-home .hero .eyebrow { font-size: 10px; letter-spacing: 0.1em; margin-bottom: 14px; }
+  .archive-home .browse-link { margin-top: 20px; padding: 10px 16px; border-radius: 6px; }
+  .archive-home .hero-caption { position: static; margin-top: 16px; font-size: 10px; }
+  .archive-home .preservation { padding-block: 24px; gap: 12px; }
+  .archive-home .preservation h2 { font-size: 30px; }
+  .archive-home .preservation div > p { margin-top: 12px; line-height: 1.75; }
   .archive-home .preservation::before { display: none; }
-  .archive-home .entries { padding-block: 48px 60px; }
-  .archive-home .archive-search { padding: 22px 18px; }
-  .archive-home .entry-card { padding: 24px 20px 0; }
+  .archive-home .entries { padding-block: 28px 40px; }
+  .archive-home .section-heading { margin-bottom: 18px; }
+  .archive-home .section-heading .eyebrow { margin-bottom: 10px; }
+  .archive-home .archive-search { padding: 14px; margin-bottom: 16px; border-radius: 6px; }
+  .archive-home .archive-search label { margin-bottom: 6px; font-size: 17px; line-height: 1.7; }
+  .archive-home .search-help { margin-bottom: 12px; font-size: 14px; line-height: 1.65; }
+  .archive-home .search-controls { gap: 8px; }
+  .archive-home .archive-search input { min-height: 48px; padding: 10px 12px; font-size: 16px; border-radius: 6px; }
+  .archive-home .search-clear { min-height: 44px; border-radius: 6px; }
+  .archive-home .entry-title-row > span { min-width: 0; }
+  .archive-home .translation-note a { display: inline-flex; align-items: center; min-height: 44px; text-underline-offset: 4px; }
   .archive-home .entry-list { gap: 24px; }
   .archive-home .provenance { padding-block: 48px; }
 }
