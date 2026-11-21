@@ -4,5 +4,5 @@ export default function EntryPhoto({ entry }) {
   const src = /^https?:\/\//i.test(photo) || (photo.startsWith("/") && !photo.startsWith("//"))
     ? photo : photo && !photo.includes(":") && !photo.startsWith("//") ? `/${photo.startsWith("images/") ? "" : "images/"}${photo}` : "";
   if (!src) return null;
-  return <img className="entry-photo" src={src} alt={`Photo for ${entry.title}`} loading="lazy" />;
+  return <img className="entry-photo" src={src} alt={`រូបថតសម្រាប់ ${entry.title} / Photo for ${entry.title}`} loading="lazy" />;
 }

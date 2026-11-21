@@ -15,8 +15,8 @@ export default async function ArchivePage({ title, children }) {
     <div className="archive-home">
       <header className="site-header">
         <a className="archive-name" href="/">{collection.name}</a>
-        <nav className="header-auth">
-          <a href="/">Browse archive</a><a href="/contribute">Contribute</a>
+        <nav className="header-auth" aria-label="គណនី និងការរុករក / Account and archive navigation">
+          <a href="/">រុករកបណ្ណសារ / Browse archive</a><a href="/contribute">ចូលរួមចំណែក / Contribute</a>
           {isReviewer && <a href="/review">ពិនិត្យកំណត់ត្រា / Review entries</a>}
           {user && <a href="/my-entries">កំណត់ត្រារបស់ខ្ញុំ / My entries</a>}
         </nav>

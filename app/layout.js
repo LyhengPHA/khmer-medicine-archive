@@ -11,7 +11,7 @@ const khmerFont = localFont({
 });
 
 export const metadata = {
-  title: `${collection.name} — Khmer Living Archive`,
+  title: `${collection.name} — បណ្ណសាររស់ខ្មែរ / Khmer Living Archive`,
   description: collection.description,
 };
 

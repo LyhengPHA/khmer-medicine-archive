@@ -30,7 +30,7 @@ export default function SignupPage() {
     setIsSubmitting(false);
 
     if (signUpError && !ACCOUNT_EXISTS_PATTERN.test(signUpError.message || "")) {
-      setError(signUpError.message || "Something went wrong. Please try again.");
+      setError("មិនអាចបង្កើតគណនីបានទេ។ សូមព្យាយាមម្តងទៀត។ / Could not create the account. Please try again.");
       return;
     }
 
@@ -40,11 +40,11 @@ export default function SignupPage() {
   }
 
   return (
-    <AuthLeafPanel title="Create a contributor account">
+    <AuthLeafPanel title="បង្កើតគណនីអ្នកចូលរួមចំណែក / Create a contributor account">
 
         {isSubmitted ? (
           <p className="auth-success" role="status">
-            Account created successfully. You can now log in.
+            បានបង្កើតគណនីដោយជោគជ័យ។ ឥឡូវនេះអ្នកអាចចូលគណនីបាន។ / Account created successfully. You can now log in.
           </p>
         ) : (
           <>
@@ -56,7 +56,7 @@ export default function SignupPage() {
 
             <form onSubmit={handleSubmit}>
               <div className="auth-field">
-                <label htmlFor="signup-email">Email</label>
+                <label htmlFor="signup-email">អ៊ីមែល / Email</label>
                 <input
                   id="signup-email"
                   type="email"
@@ -68,7 +68,7 @@ export default function SignupPage() {
               </div>
 
               <div className="auth-field">
-                <label htmlFor="signup-password">Password</label>
+                <label htmlFor="signup-password">ពាក្យសម្ងាត់ / Password</label>
                 <input
                   id="signup-password"
                   type="password"
@@ -81,14 +81,14 @@ export default function SignupPage() {
               </div>
 
               <button className="auth-submit" type="submit" disabled={isSubmitting}>
-                {isSubmitting ? "Signing up..." : "Sign up"}
+                {isSubmitting ? "កំពុងចុះឈ្មោះ… / Signing up…" : "ចុះឈ្មោះ / Sign up"}
               </button>
             </form>
           </>
         )}
 
         <p className="auth-switch">
-          Already have an account? <a href="/login">Log in</a>
+          មានគណនីរួចហើយមែនទេ? / Already have an account? <a href="/login">ចូលគណនី / Log in</a>
         </p>
     </AuthLeafPanel>
   );

@@ -90,6 +90,6 @@ export async function DELETE(request, { params }) {
     return Response.json({ id: data.id });
   } catch (error) {
     console.error("Entry deletion failed", error);
-    return Response.json({ error: "Could not delete your entry. Please try again." }, { status: 500 });
+    return Response.json({ error: "មិនអាចលុបកំណត់ត្រារបស់អ្នកបានទេ។ សូមព្យាយាមម្តងទៀត។ / Could not delete your entry. Please try again." }, { status: 500 });
   }
 }

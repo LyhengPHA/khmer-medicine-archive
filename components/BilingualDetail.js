@@ -6,7 +6,7 @@ export default function BilingualDetail({ khmer, english }) {
           <li key={index}>
             <span lang="km">{text}</span>
             <span className="entry-translation" lang="en">
-              {english?.[index] || "English plant name pending verification."}
+              {english?.[index] || "ឈ្មោះរុក្ខជាតិជាភាសាអង់គ្លេសកំពុងរង់ចាំការផ្ទៀងផ្ទាត់។ / English plant name pending verification."}
             </span>
           </li>
         ))}

@@ -21,7 +21,7 @@ export default async function EntryPage({ params }) {
     } catch (error) { console.error("Entry user lookup failed", error); }
   } catch (error) {
     console.error("Entry detail lookup failed", error);
-    return <ArchivePage title="Entry unavailable"><p>Could not load this entry. Please refresh to try again.</p></ArchivePage>;
+    return <ArchivePage title="មិនអាចប្រើកំណត់ត្រា / Entry unavailable"><p>មិនអាចផ្ទុកកំណត់ត្រានេះបានទេ។ សូមផ្ទុកទំព័រឡើងវិញដើម្បីព្យាយាមម្តងទៀត។ / Could not load this entry. Please refresh to try again.</p></ArchivePage>;
   }
   if (!entry) notFound();
     return (

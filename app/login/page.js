@@ -28,7 +28,7 @@ export default function LoginPage() {
     if (signInError) {
       // Every failed login shows the same message. This avoids revealing
       // whether the email address has an account at all.
-      setError("Invalid email or password");
+      setError("អ៊ីមែល ឬពាក្យសម្ងាត់មិនត្រឹមត្រូវ។ / Invalid email or password.");
       return;
     }
 
@@ -36,7 +36,7 @@ export default function LoginPage() {
   }
 
   return (
-    <AuthLeafPanel title="Log in to the archive">
+    <AuthLeafPanel title="ចូលគណនីបណ្ណសារ / Log in to the archive">
 
         {error ? (
           <p className="auth-error" role="alert">
@@ -46,7 +46,7 @@ export default function LoginPage() {
 
         <form onSubmit={handleSubmit}>
           <div className="auth-field">
-            <label htmlFor="login-email">Email</label>
+            <label htmlFor="login-email">អ៊ីមែល / Email</label>
             <input
               id="login-email"
               type="email"
@@ -58,7 +58,7 @@ export default function LoginPage() {
           </div>
 
           <div className="auth-field">
-            <label htmlFor="login-password">Password</label>
+            <label htmlFor="login-password">ពាក្យសម្ងាត់ / Password</label>
             <input
               id="login-password"
               type="password"
@@ -70,12 +70,12 @@ export default function LoginPage() {
           </div>
 
           <button className="auth-submit" type="submit" disabled={isSubmitting}>
-            {isSubmitting ? "Logging in..." : "Log in"}
+            {isSubmitting ? "កំពុងចូលគណនី… / Logging in…" : "ចូលគណនី / Log in"}
           </button>
         </form>
 
         <p className="auth-switch">
-          Need a contributor account? <a href="/signup">Sign up</a>
+          ត្រូវការគណនីអ្នកចូលរួមចំណែកមែនទេ? / Need a contributor account? <a href="/signup">ចុះឈ្មោះ / Sign up</a>
         </p>
     </AuthLeafPanel>
   );

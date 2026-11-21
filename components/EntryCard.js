@@ -16,16 +16,16 @@ export default function EntryCard({ entry, recordNumber, defaultOpen = false }) 
     <details className="entry-card" open={defaultOpen || undefined}>
       <summary className="entry-toggle">
         <span className="entry-card-topline">
-          <span>Condition / body system record</span>
-          <span>No. {String(recordNumber).padStart(2, "0")}</span>
+          <span>កំណត់ត្រាអំពីស្ថានភាពសុខភាព / ប្រព័ន្ធរាងកាយ / Condition / body system record</span>
+          <span>លេខ / No. {String(recordNumber).padStart(2, "0")}</span>
         </span>
         <span className="entry-title-row">
           <span>
-            <span className="entry-category">Traditionally used for</span>
+            <span className="entry-category">ប្រើតាមបែបប្រពៃណីសម្រាប់ / Traditionally used for</span>
             <span className="khmer-entry-name" lang="km" role="heading" aria-level={3}>{entry.title}</span>
             <span className="english-name" lang="en">{entry.englishTitle}</span>
           </span>
-          <span className="record-stamp">Recorded</span>
+          <span className="record-stamp">បានកត់ត្រា / Recorded</span>
         </span>
         <span className="entry-preview" lang="km">{entry.khmerDescription}</span>
         <span className="entry-preview entry-translation" lang="en">{entry.description}</span>
@@ -36,11 +36,13 @@ export default function EntryCard({ entry, recordNumber, defaultOpen = false }) 
         </span>
       </summary>
       <p className="translation-note">
-        English translations and name spellings are drafts awaiting source review.
-        Supplied plant names await verification; missing names are marked as pending.
+        ការបកប្រែជាភាសាអង់គ្លេស និងអក្ខរាវិរុទ្ធឈ្មោះគឺជាសេចក្តីព្រាងដែលកំពុងរង់ចាំការពិនិត្យពីប្រភព។
+        ឈ្មោះរុក្ខជាតិដែលបានផ្តល់កំពុងរង់ចាំការផ្ទៀងផ្ទាត់ ហើយឈ្មោះដែលខ្វះត្រូវបានសម្គាល់ថាកំពុងរង់ចាំ។ / English
+        translations and name spellings are drafts awaiting source review. Supplied plant names await
+        verification; missing names are marked as pending.
       </p>
       <p className="translation-note">
-        Contributor-reported traditional use; not medical advice.
+        ការប្រើប្រាស់តាមបែបប្រពៃណីដែលរាយការណ៍ដោយអ្នកចូលរួមចំណែក មិនមែនជាដំបូន្មានវេជ្ជសាស្ត្រទេ។ / Contributor-reported traditional use; not medical advice.
       </p>
       <div className="entry-details">
         <EntryPhoto entry={entry} />
@@ -53,9 +55,9 @@ export default function EntryCard({ entry, recordNumber, defaultOpen = false }) 
       </div>
       <dl className="entry-source">
         {[
-          ["contributor", "Contributor / Source"],
-          ["place", "Place / Region"],
-          ["learnedFrom", "Learned from"],
+          ["contributor", "អ្នកចូលរួមចំណែក / ប្រភព / Contributor / Source"],
+          ["place", "ទីកន្លែង / តំបន់ / Place / Region"],
+          ["learnedFrom", "រៀនពី / Learned from"],
         ].map(([field, label]) => (
           <div key={field}>
             <dt>{label}</dt>
@@ -63,8 +65,8 @@ export default function EntryCard({ entry, recordNumber, defaultOpen = false }) 
           </div>
         ))}
       </dl>
-      {entry.story && <div className="translation-note"><h4>Story</h4><p>{entry.story}</p></div>}
-      {entry.id && <p className="translation-note"><a href={`/entries/${encodeURIComponent(entry.id)}`}>Open entry page</a></p>}
+      {entry.story && <div className="translation-note"><h4>រឿងរ៉ាវ / Story</h4><p>{entry.story}</p></div>}
+      {entry.id && <p className="translation-note"><a href={`/entries/${encodeURIComponent(entry.id)}`}>បើកទំព័រកំណត់ត្រា / Open entry page</a></p>}
     </details>
   );
 }
