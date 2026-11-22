@@ -14,12 +14,12 @@ The archive serves Khmer-speaking readers, students, and contributors in Cambodi
 
 - Original Khmer names and descriptions are preserved.
 - Search supports Khmer and English across titles, descriptions, ingredients, preparation, sources, and places.
-- Contribution fields, validation messages, entry statuses, and review actions use Khmer and English.
+- A site-wide ខ្មែរ / English switch defaults to Khmer and remembers the selected language in browser storage. Navigation, forms, feedback, and review actions show one language at a time.
 - Noto Sans Khmer supports Khmer text display.
 - Expandable entry cards keep detailed records accessible. Tree animation includes a pause control and respects reduced-motion preferences.
 - Responsive layouts support phones; local mobile checks are recorded in section 8. Source and place fields keep credits with each record.
 
-The interface is bilingual from navigation and authentication through search, contribution, ownership, review, loading, empty, and error states. English translations and plant identifications in contributor records are drafts pending verification. The archive requires an internet connection; slow-connection performance has not been measured.
+The language choice applies from navigation and authentication through search, contribution, ownership, review, loading, empty, and error states. Entry content uses existing translations; missing English translations retain the original Khmer with a pending notice. Choosing a language does not translate or change stored records. English translations and plant identifications in contributor records are drafts pending verification. The archive requires an internet connection; slow-connection performance has not been measured.
 
 ## 3. How it works
 
@@ -103,7 +103,7 @@ For documentation, I corrected AI drafts using the actual code and my source's i
 - Tested ownership with separate accounts and attempted unauthorized operations through the Console.
 - Checked that logged-out requests could not read unpublished entries and non-reviewers could not publish.
 - Checked signed-in mobile layouts at 360, 390, and 430px, plus desktop at 1024px, including Khmer text, expanded entry details, and browser Console messages.
-- Ran the mocked mutation and photo-cleanup tests in `tests/entryMutations.test.cjs`: 18 passed and 0 failed.
+- Ran the mocked mutation and photo-cleanup tests in `tests/entryMutations.test.cjs`: 30 passed and 0 failed (18 mutation tests and 12 language tests).
 - Used repository/history secret scans.
 
 AI-assisted commits include the bilingual navigation correction (`38c783a`) and review queue (`a055e10`).
@@ -172,14 +172,14 @@ npm run start
 Run the existing mocked tests:
 
 ```bash
-node --experimental-vm-modules --test tests/entryMutations.test.cjs
+node --experimental-vm-modules --test tests/*.test.cjs
 ```
 
 For Vercel deployment, set the same two environment variables and connect the GitHub repository. Keep the Supabase project active.
 
 ## 8. Submission checklist
 
-Status as of 21 November 2026, based on completed checks and curator confirmation. Pending items remain open until completed.
+Status updated 22 November 2026. Earlier workflow checks are retained; the curator confirmed local language-switch browser checks; final deployed-site verification remains pending. Pending items remain open until completed.
 
 | Check | Status | Where to look / evidence |
 | --- | --- | --- |
@@ -192,16 +192,16 @@ Status as of 21 November 2026, based on completed checks and curator confirmatio
 | Repository/history secret scan completed | Yes | Latest scan confirmed by the curator. |
 | Small commits with AI-assisted work identified | Yes | Git history includes separate AI-assisted commits for mobile CSS, bilingual/source corrections, mutation tests, and final documentation. |
 | At least eight real entries with credited sources | Yes | Live collection and entry source details. |
-| Khmer throughout user-facing screens, including the queue | Yes locally; deployment recheck pending | Navigation, authentication, search, buttons, feedback states, ownership controls, and reviewer messages are bilingual. |
-| Works on a phone | Signed-in local checks passed; deployment recheck pending | Chrome at 360, 390, and 430px; desktop at 1024px. No clipped labels or horizontal page overflow. |
-| Mutation route tests | Yes | 18 passed and 0 failed with `node --experimental-vm-modules --test tests/entryMutations.test.cjs`. |
+| Khmer throughout user-facing screens, including the queue | Yes locally; deployment recheck pending | Navigation, authentication, search, feedback, ownership controls, and reviewer messages follow the selected language. The switch defaults to Khmer. |
+| Works on a phone | Local language-switch checks confirmed by the curator; deployment recheck pending | Khmer and English checked at 360, 390, and 430px, plus desktop at 1024px. |
+| Mutation and language tests | Yes | 30 passed and 0 failed (18 mutation tests and 12 language tests) with `node --experimental-vm-modules --test tests/*.test.cjs`. |
 | Production build and diff checks | Yes | `npm run build` and `git diff --check` passed. |
 | Empty states and plain error messages | Implemented; final live walkthrough pending | Homepage search, contribution form, My entries, and review queue. |
-| No test entries, lorem ipsum, or TODO comments in shipped pages | Yes | Collection cleanup and shipped-page checks confirmed by the curator. |
+| No test entries, lorem ipsum, or TODO comments in the public collection | Yes | The public shelf contains sourced records. Unpublished test submissions are retained in the reviewer queue. |
 | No console errors on main pages | None observed locally; deployed-site recheck pending | Browser Console during local page checks. |
 | `jesseorndorff` is a collaborator | Yes | GitHub repository collaborator settings. |
 | Supabase project awake and working | Yes, 21 November 2026 | Supabase dashboard and live record loading. |
-| Final polish committed and pushed | Completed by the finalization task; deployment verification pending | Four separate AI-assisted commits on the deployment branch. |
+| Final polish committed and pushed | Earlier polish pushed; language switch pending review | Main contains the earlier four AI-assisted polish commits. Review and verify the language switch before deployment. |
 | Demo video is five minutes or less, in English, with screen and voice | Not yet | Show visitor search, account/contribution/ownership, and review/publication; name one decision and one AI mistake. |
 | Demo link opens without login in a private window | Not yet | Submit the tested public/unlisted link in the separate Canvas **Demo Video** assignment and in Show Your Archive. |
 | Four reflection answers submitted with the live URL and repo link | Not yet | One Final Capstone text box, in order: live URL, repo link, then four short reflection paragraphs. |
@@ -209,6 +209,6 @@ Status as of 21 November 2026, based on completed checks and curator confirmatio
 | Two peer replies completed | Not yet | One strength and one suggested change per classmate; due 29 November, 11:59 PM. |
 | Q&A slot booked | Yes | Class Bookings page; bring a laptop with the repository open. |
 
-Signed-in local mobile checks at 360, 390, and 430px covered search/card alignment, horizontal overflow, full Khmer titles, closed previews, expanded bilingual descriptions, accessible entry details, and the expand/collapse target. The desktop hanging-tree layout was retained at 1024px. The production build, all 18 mutation tests, and diff checks passed. Final deployed-site verification remains pending until the new deployment is available.
+Signed-in local mobile checks at 360, 390, and 430px covered search/card alignment, horizontal overflow, full Khmer titles, closed previews, expanded bilingual descriptions, accessible entry details, and the expand/collapse target. The desktop hanging-tree layout was retained at 1024px. The production build, all 30 automated tests, and diff checks passed. The curator also confirmed the local language-switch browser checks on 22 November. Final data-display guards hide empty optional sections and preserve original Khmer when translation values have the wrong type; regression tests cover these cases. Final deployed-site verification remains pending.
 
 The Final Capstone and separate Demo Video assignments are both due 22 November 2026 at 11:59 PM. There is no late window, even though Canvas remains available until 29 November. Final AI-use documentation is in section 5; no separate final Prompt Journal is required.
