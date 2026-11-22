@@ -11,6 +11,90 @@
   --display-font: Georgia, "Times New Roman", var(--font-khmer), serif;
 }
 
+/* Collection introduction: decorative artwork beside the credited source story. */
+.archive-home .collection-story {
+  display: grid;
+  grid-template-columns: minmax(0, 0.94fr) minmax(0, 1.06fr);
+  align-items: center;
+  gap: clamp(32px, 5vw, 72px);
+  padding-block: clamp(48px, 7vw, 88px);
+  border-bottom: 1px solid #3b5044;
+}
+.collection-story-art {
+  min-width: 0;
+  overflow: hidden;
+  border: 1px solid #c7ad72;
+  border-radius: 4px;
+  background: #253e2c;
+}
+.collection-story-art img { display: block; width: 100%; height: auto; }
+.collection-story-copy { min-width: 0; }
+.collection-story-copy .collection-story-eyebrow {
+  margin: 0 0 20px;
+  color: #d8be82;
+  font: 400 0.875rem/1.7 "Courier New", monospace;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+.archive-home .collection-story h2 {
+  margin: 0;
+  color: #f2ebdc;
+  font-size: clamp(2rem, 3.5vw, 3rem);
+  font-weight: 400;
+  line-height: 1.18;
+  letter-spacing: -0.025em;
+  overflow-wrap: anywhere;
+}
+.collection-story h2 > span { display: block; }
+.collection-story-description {
+  margin: 24px 0 0;
+  color: #d6dccd;
+  font-family: var(--body-font);
+  font-size: 1.0625rem;
+  line-height: 1.85;
+}
+.collection-story-source {
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
+  margin-top: 26px;
+  font-family: var(--body-font);
+}
+.collection-story-source::before {
+  content: "";
+  flex: 0 0 42px;
+  margin-top: 13px;
+  border-top: 2px solid #d8be82;
+}
+.collection-story-source-name { margin: 0; color: #f2ebdc; font-size: 1rem; font-weight: 600; }
+.collection-story-source-context { margin: 6px 0 0; color: #c6cdbd; font-size: 0.9375rem; line-height: 1.8; }
+.collection-story-link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 48px;
+  max-width: 100%;
+  margin-top: 24px;
+  color: #e6c47c;
+  font-size: 1.125rem;
+  line-height: 1.7;
+  text-underline-offset: 7px;
+  text-decoration-thickness: 1px;
+}
+.collection-story-link:hover { color: #fff0c7; }
+.collection-story-link:focus-visible { outline: 2px solid #e6c47c; outline-offset: 5px; }
+html[lang="km"] .collection-story h2 { font-family: var(--body-font); line-height: 1.7; letter-spacing: normal; }
+html[lang="km"] .collection-story-eyebrow { font-family: var(--body-font); letter-spacing: normal; text-transform: none; }
+
+@media (max-width: 760px) {
+  .archive-home .collection-story { grid-template-columns: minmax(0, 1fr); gap: 28px; padding-block: 32px 40px; }
+  .collection-story-copy .collection-story-eyebrow { margin-bottom: 14px; font-size: 0.875rem; }
+  .archive-home .collection-story h2 { font-size: clamp(1.75rem, 6.5vw, 2.5rem); }
+  .collection-story-description { margin-top: 18px; font-size: 1rem; }
+  .collection-story-source { gap: 14px; margin-top: 22px; }
+  .collection-story-source::before { flex-basis: 28px; }
+  .collection-story-link { margin-top: 18px; }
+}
+
 .contribution-page { max-width: 850px; padding-block: clamp(24px, 4vw, 40px) 64px; }
 .contribution-page > h1 { margin-top: 0; }
 .contribution-fields { border: 0; padding: 0; margin: 0; min-width: 0; }

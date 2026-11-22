@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import EntryTree from "../components/EntryTree.js";
 import ArchiveHero from "../components/ArchiveHero.js";
+import ArchiveAbout from "../components/ArchiveAbout.js";
 import ArchiveHeader from "../components/ArchiveHeader.js";
 import LanguageText from "../components/LanguageText.js";
 import { useLanguage } from "../components/LanguageProvider.js";
@@ -81,13 +82,7 @@ export default function Home() {
       <main id="top">
         <ArchiveHero />
 
-        <section className="preservation page-width" aria-labelledby="about-title">
-          <p className="section-number"><LanguageText text={"ក្នុងបណ្ដុំ / Inside the collection"} /></p>
-          <div>
-            <h2 id="about-title"><LanguageText text={"ចំណេះដឹងដែលបានរក្សាទុកតាមជំនាន់ / Knowledge preserved through generations"} /></h2>
-            <p><LanguageText text={"បណ្ណសារសហគមន៍នេះកត់ត្រាឱសថបុរាណខ្មែរ គ្រឿងផ្សំ វិធីរៀបចំ ព្រមទាំងមនុស្ស និងទីកន្លែងដែលទាក់ទងនឹងឱសថទាំងនោះ។ / This community archive documents Khmer traditional remedies, their ingredients, preparation methods, and the people and places connected to them."} /></p>
-          </div>
-        </section>
+        <ArchiveAbout />
 
         <section className="entries page-width" aria-labelledby="entries-title">
           <div className="section-heading">

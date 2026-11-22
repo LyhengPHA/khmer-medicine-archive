@@ -18,6 +18,7 @@ const collection = {
   curator: "Lyheng PHA",
 
   // Where does your knowledge come from? A person, a place, a community.
+  sourceName: "នាង សុខជា / Neang Sokchea",
   source: "នាង សុខជា (Neang Sokchea) បានរៀនចំណេះដឹងនេះនៅខេត្តតាកែវ ហើយបច្ចុប្បន្នរស់នៅរាជធានីភ្នំពេញ។ / Neang Sokchea learned this knowledge in Takeo and now lives in Phnom Penh.",
 };
 

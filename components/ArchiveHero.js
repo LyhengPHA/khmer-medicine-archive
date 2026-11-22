@@ -1,8 +1,6 @@
 "use client";
 
 import LanguageText from "./LanguageText.js";
-
-
 import Image from "next/image";
 import collection from "../collection.config.js";
 import { useLanguage } from "./LanguageProvider.js";
@@ -28,7 +26,6 @@ export default function ArchiveHero() {
           <a className="browse-link" href="#entries-title"><LanguageText text={"រុករកបណ្ណសារ / Browse the archive"} /><span aria-hidden="true">↓</span>
           </a>
         </div>
-        <p className="hero-caption"><LanguageText text={"រូបភាពតំណាង · បង្កើតដោយ AI / Illustrative scene · AI-generated"} /></p>
       </div>
     </section>
   );
