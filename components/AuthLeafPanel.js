@@ -1,4 +1,6 @@
 import collection from "../collection.config.js";
+import LanguageText from "./LanguageText.js";
+import LanguageSwitcher from "./LanguageSwitcher.js";
 
 export default function AuthLeafPanel({ title, children }) {
   return (
@@ -36,10 +38,11 @@ export default function AuthLeafPanel({ title, children }) {
           </g>
         </svg>
         <div className="auth-card">
+          <div className="auth-language"><LanguageSwitcher /></div>
           <p className="eyebrow">
-            <a href="/">{collection.name}</a>
+            <a href="/"><LanguageText text={collection.name} /></a>
           </p>
-          <h1 id="auth-heading">{title}</h1>
+          <h1 id="auth-heading"><LanguageText text={title} /></h1>
           {children}
         </div>
       </section>

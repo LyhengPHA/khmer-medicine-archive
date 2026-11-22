@@ -1,3 +1,4 @@
+import LanguageText from "../../components/LanguageText.js";
 import { createClient } from "../../lib/supabase/server.js";
 import ArchivePage from "../../components/ArchivePage.js";
 import ContributionForm from "../../components/ContributionForm.js";
@@ -14,7 +15,7 @@ export default async function ContributePage() {
   } catch (error) { console.error("Contribution user lookup failed", error); }
   return (
     <ArchivePage title="បញ្ចូលកំណត់ត្រា / Contribute an entry">
-      {user ? <ContributionForm /> : <p><a href="/login">សូមចូលគណនី / Please log in</a> ដើម្បីបញ្ចូលកំណត់ត្រា / to contribute an entry.</p>}
+      {user ? <ContributionForm /> : <p><a href="/login"><LanguageText text={"សូមចូលគណនី / Please log in"} /></a>{" "}<LanguageText text={"ដើម្បីបញ្ចូលកំណត់ត្រា / to contribute an entry."} /></p>}
     </ArchivePage>
   );
 }

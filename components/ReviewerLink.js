@@ -1,5 +1,8 @@
 "use client";
 
+import LanguageText from "./LanguageText.js";
+
+
 import { useEffect, useState } from "react";
 import { createClient } from "../lib/supabase/client.js";
 
@@ -22,5 +25,5 @@ export default function ReviewerLink({ user }) {
   }, [user]);
 
   if (!user || reviewerId !== user.id) return null;
-  return <a className="header-auth-link" href="/review">ពិនិត្យកំណត់ត្រា / Review entries</a>;
+  return <a className="header-auth-link" href="/review"><LanguageText text={"ពិនិត្យកំណត់ត្រា / Review entries"} /></a>;
 }

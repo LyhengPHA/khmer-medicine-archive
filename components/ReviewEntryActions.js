@@ -1,5 +1,8 @@
 "use client";
 
+import LanguageText from "./LanguageText.js";
+
+
 import { useRef, useState } from "react";
 import { createClient } from "../lib/supabase/client.js";
 
@@ -29,10 +32,10 @@ export default function ReviewEntryActions({ entry, onReviewed }) {
   return (
     <div className="entry-owner-controls" aria-busy={busy}>
       <div className="entry-owner-actions">
-        <button type="button" disabled={busy} onClick={() => review("published")}>ផ្សព្វផ្សាយ / Publish</button>
-        <button type="button" disabled={busy} onClick={() => review("returned")}>បញ្ជូនត្រឡប់ / Return</button>
+        <button type="button" disabled={busy} onClick={() => review("published")}><LanguageText text={"ផ្សព្វផ្សាយ / Publish"} /></button>
+        <button type="button" disabled={busy} onClick={() => review("returned")}><LanguageText text={"បញ្ជូនត្រឡប់ / Return"} /></button>
       </div>
-      {message && <p className="auth-error" role="alert">{message}</p>}
+      {message && <p className="auth-error" role="alert"><LanguageText text={message} /></p>}
     </div>
   );
 }

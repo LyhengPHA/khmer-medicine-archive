@@ -1,5 +1,8 @@
 "use client";
 
+import LanguageText from "../../components/LanguageText.js";
+
+
 import { useState } from "react";
 import { createClient } from "../../lib/supabase/client.js";
 import AuthLeafPanel from "../../components/AuthLeafPanel.js";
@@ -43,20 +46,18 @@ export default function SignupPage() {
     <AuthLeafPanel title="បង្កើតគណនីអ្នកចូលរួមចំណែក / Create a contributor account">
 
         {isSubmitted ? (
-          <p className="auth-success" role="status">
-            បានបង្កើតគណនីដោយជោគជ័យ។ ឥឡូវនេះអ្នកអាចចូលគណនីបាន។ / Account created successfully. You can now log in.
-          </p>
+          <p className="auth-success" role="status"><LanguageText text={"បានបង្កើតគណនីដោយជោគជ័យ។ ឥឡូវនេះអ្នកអាចចូលគណនីបាន។ / Account created successfully. You can now log in."} /></p>
         ) : (
           <>
             {error ? (
               <p className="auth-error" role="alert">
-                {error}
+                <LanguageText text={error} />
               </p>
             ) : null}
 
             <form onSubmit={handleSubmit}>
               <div className="auth-field">
-                <label htmlFor="signup-email">អ៊ីមែល / Email</label>
+                <label htmlFor="signup-email"><LanguageText text={"អ៊ីមែល / Email"} /></label>
                 <input
                   id="signup-email"
                   type="email"
@@ -68,7 +69,7 @@ export default function SignupPage() {
               </div>
 
               <div className="auth-field">
-                <label htmlFor="signup-password">ពាក្យសម្ងាត់ / Password</label>
+                <label htmlFor="signup-password"><LanguageText text={"ពាក្យសម្ងាត់ / Password"} /></label>
                 <input
                   id="signup-password"
                   type="password"
@@ -81,14 +82,13 @@ export default function SignupPage() {
               </div>
 
               <button className="auth-submit" type="submit" disabled={isSubmitting}>
-                {isSubmitting ? "កំពុងចុះឈ្មោះ… / Signing up…" : "ចុះឈ្មោះ / Sign up"}
+                <LanguageText text={isSubmitting ? "កំពុងចុះឈ្មោះ… / Signing up…" : "ចុះឈ្មោះ / Sign up"} />
               </button>
             </form>
           </>
         )}
 
-        <p className="auth-switch">
-          មានគណនីរួចហើយមែនទេ? / Already have an account? <a href="/login">ចូលគណនី / Log in</a>
+        <p className="auth-switch"><LanguageText text={"មានគណនីរួចហើយមែនទេ? / Already have an account?"} />{" "}<a href="/login"><LanguageText text={"ចូលគណនី / Log in"} /></a>
         </p>
     </AuthLeafPanel>
   );

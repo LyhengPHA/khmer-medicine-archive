@@ -1,3 +1,4 @@
+import LanguageText from "../../components/LanguageText.js";
 import { createClient } from "../../lib/supabase/server.js";
 import ArchivePage from "../../components/ArchivePage.js";
 import ReviewQueue from "../../components/ReviewQueue.js";
@@ -14,7 +15,7 @@ export default async function ReviewPage() {
   } catch { /* Fail closed before querying entries. */ }
 
   if (!isReviewer) return (
-    <p>ទំព័រនេះសម្រាប់តែអ្នកត្រួតពិនិត្យប៉ុណ្ណោះ។ / This page is for reviewers only.</p>
+    <ArchivePage title="ពិនិត្យកំណត់ត្រា / Review entries"><p><LanguageText text={"ទំព័រនេះសម្រាប់តែអ្នកត្រួតពិនិត្យប៉ុណ្ណោះ។ / This page is for reviewers only."} /></p></ArchivePage>
   );
 
   let entries;
@@ -28,8 +29,8 @@ export default async function ReviewPage() {
   } catch {
     return (
       <ArchivePage title="ពិនិត្យកំណត់ត្រា / Review entries">
-        <p role="alert">មិនអាចផ្ទុកកំណត់ត្រាសម្រាប់ពិនិត្យបាន។ / Could not load the review queue.</p>
-        <a href="/review">ព្យាយាមម្តងទៀត / Try again</a>
+        <p role="alert"><LanguageText text={"មិនអាចផ្ទុកកំណត់ត្រាសម្រាប់ពិនិត្យបាន។ / Could not load the review queue."} /></p>
+        <a href="/review"><LanguageText text={"ព្យាយាមម្តងទៀត / Try again"} /></a>
       </ArchivePage>
     );
   }

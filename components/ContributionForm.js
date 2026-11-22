@@ -1,5 +1,8 @@
 "use client";
 
+import LanguageText from "./LanguageText.js";
+
+
 import { useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { fields, validateContribution, validatePhoto } from "../lib/contribution.js";
@@ -62,20 +65,20 @@ export default function ContributionForm({ entry }) {
 
   if (submitted) return (
     <div role="status">
-      <p>បានដាក់ស្នើរួចរាល់។ កំណត់ត្រារបស់អ្នកកំពុងរង់ចាំការពិនិត្យ។ / Submitted successfully. Your entry is waiting for review.</p>
-      <a href="/my-entries">កំណត់ត្រារបស់ខ្ញុំ / My entries</a>
+      <p><LanguageText text={"បានដាក់ស្នើរួចរាល់។ កំណត់ត្រារបស់អ្នកកំពុងរង់ចាំការពិនិត្យ។ / Submitted successfully. Your entry is waiting for review."} /></p>
+      <a href="/my-entries"><LanguageText text={"កំណត់ត្រារបស់ខ្ញុំ / My entries"} /></a>
     </div>
   );
 
   return (
     <form onSubmit={handleSubmit} noValidate aria-busy={busy}>
-      <p>សញ្ញា * បង្ហាញថាត្រូវបំពេញ។ អាចប្រើអក្សរខ្មែរ និងអង់គ្លេស។ / * means required. Khmer and English welcome.</p>
+      <p><LanguageText text={"សញ្ញា * បង្ហាញថាត្រូវបំពេញ។ អាចប្រើអក្សរខ្មែរ និងអង់គ្លេស។ / * means required. Khmer and English welcome."} /></p>
       <fieldset disabled={busy} className="contribution-fields">
         {fields.map((field) => <ContributionField key={field.name} field={field} error={errors[field.name]} value={entry?.[field.name]} />)}
         <ContributionPhotoField entry={entry} error={errors.photo} />
-        <button className="auth-submit" type="submit" disabled={busy}>{busy ? "កំពុងរក្សាទុក… / Saving…" : entry ? "រក្សាទុកការកែប្រែ / Save changes" : "ដាក់ស្នើសម្រាប់ពិនិត្យ / Submit for review"}</button>
+        <button className="auth-submit" type="submit" disabled={busy}><LanguageText text={busy ? "កំពុងរក្សាទុក… / Saving…" : entry ? "រក្សាទុកការកែប្រែ / Save changes" : "ដាក់ស្នើសម្រាប់ពិនិត្យ / Submit for review"} /></button>
       </fieldset>
-      <p role="alert" className="auth-error">{message}</p>
+      <p role="alert" className="auth-error"><LanguageText text={message} /></p>
     </form>
   );
 }

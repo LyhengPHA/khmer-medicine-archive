@@ -1,5 +1,11 @@
+"use client";
+
 import BilingualDetail from "./BilingualDetail.js";
 import EntryPhoto from "./EntryPhoto.js";
+import EntryTitle from "./EntryTitle.js";
+import LanguageText from "./LanguageText.js";
+import { useLanguage } from "./LanguageProvider.js";
+import { hasRecordContent, recordDescription, selectRecordText } from "../lib/language.js";
 
 const details = [
   ["ingredients", "Ingredients", "គ្រឿងផ្សំ"],
@@ -12,44 +18,39 @@ const details = [
 ];
 
 export default function EntryCard({ entry, recordNumber, defaultOpen = false }) {
+  const { language, pick } = useLanguage();
+  const description = recordDescription(entry);
+  const preview = selectRecordText(description.source, description.english, language);
   return (
     <details className="entry-card" open={defaultOpen || undefined}>
       <summary className="entry-toggle">
         <span className="entry-card-topline">
-          <span>កំណត់ត្រាអំពីស្ថានភាពសុខភាព / ប្រព័ន្ធរាងកាយ / Condition / body system record</span>
-          <span>លេខ / No. {String(recordNumber).padStart(2, "0")}</span>
+          <span><LanguageText text={"កំណត់ត្រាអំពីស្ថានភាពសុខភាព / ប្រព័ន្ធរាងកាយ / Condition / body system record"} /></span>
+          <span><LanguageText text={"លេខ / No."} />{" "}{String(recordNumber).padStart(2, "0")}</span>
         </span>
         <span className="entry-title-row">
           <span>
-            <span className="entry-category">ប្រើតាមបែបប្រពៃណីសម្រាប់ / Traditionally used for</span>
-            <span className="khmer-entry-name" lang="km" role="heading" aria-level={3}>{entry.title}</span>
-            <span className="english-name" lang="en">{entry.englishTitle}</span>
+            <span className="entry-category"><LanguageText text={"ប្រើតាមបែបប្រពៃណីសម្រាប់ / Traditionally used for"} /></span>
+            <span className="khmer-entry-name" lang={language} role="heading" aria-level={3}><EntryTitle entry={entry} /></span>
           </span>
-          <span className="record-stamp">បានកត់ត្រា / Recorded</span>
+          <span className="record-stamp"><LanguageText text={"បានកត់ត្រា / Recorded"} /></span>
         </span>
-        <span className="entry-preview" lang="km">{entry.khmerDescription}</span>
-        <span className="entry-preview entry-translation" lang="en">{entry.description}</span>
+        <span className="entry-preview" lang={preview.lang}>{preview.text}</span>
         <span className="entry-toggle-label">
-          <span className="when-closed">View details / <span lang="km">មើលព័ត៌មានលម្អិត</span></span>
-          <span className="when-open">Hide details / <span lang="km">លាក់ព័ត៌មានលម្អិត</span></span>
+          <span className="when-closed">{pick("មើលព័ត៌មានលម្អិត", "View details")}</span>
+          <span className="when-open">{pick("លាក់ព័ត៌មានលម្អិត", "Hide details")}</span>
           <span className="entry-toggle-icon" aria-hidden="true">+</span>
         </span>
       </summary>
-      <p className="translation-note">
-        ការបកប្រែជាភាសាអង់គ្លេស និងអក្ខរាវិរុទ្ធឈ្មោះគឺជាសេចក្តីព្រាងដែលកំពុងរង់ចាំការពិនិត្យពីប្រភព។
-        ឈ្មោះរុក្ខជាតិដែលបានផ្តល់កំពុងរង់ចាំការផ្ទៀងផ្ទាត់ ហើយឈ្មោះដែលខ្វះត្រូវបានសម្គាល់ថាកំពុងរង់ចាំ។ / English
-        translations and name spellings are drafts awaiting source review. Supplied plant names await
-        verification; missing names are marked as pending.
-      </p>
-      <p className="translation-note">
-        ការប្រើប្រាស់តាមបែបប្រពៃណីដែលរាយការណ៍ដោយអ្នកចូលរួមចំណែក មិនមែនជាដំបូន្មានវេជ្ជសាស្ត្រទេ។ / Contributor-reported traditional use; not medical advice.
-      </p>
+      {preview.pending && <p className="translation-pending" lang="en">English description pending. Original text shown.</p>}
+      <p className="translation-note"><LanguageText text={"ការបកប្រែជាភាសាអង់គ្លេស និងអក្ខរាវិរុទ្ធឈ្មោះគឺជាសេចក្តីព្រាងដែលកំពុងរង់ចាំការពិនិត្យពីប្រភព។ ឈ្មោះរុក្ខជាតិដែលបានផ្តល់កំពុងរង់ចាំការផ្ទៀងផ្ទាត់ ហើយឈ្មោះដែលខ្វះត្រូវបានសម្គាល់ថាកំពុងរង់ចាំ។ / English translations and name spellings are drafts awaiting source review. Supplied plant names await verification; missing names are marked as pending."} /></p>
+      <p className="translation-note"><LanguageText text={"ការប្រើប្រាស់តាមបែបប្រពៃណីដែលរាយការណ៍ដោយអ្នកចូលរួមចំណែក មិនមែនជាដំបូន្មានវេជ្ជសាស្ត្រទេ។ / Contributor-reported traditional use; not medical advice."} /></p>
       <div className="entry-details">
         <EntryPhoto entry={entry} />
-        {details.map(([field, label, khmerLabel]) => (
+        {details.filter(([field]) => hasRecordContent(entry[field]) || hasRecordContent(entry.english?.[field])).map(([field, label, khmerLabel]) => (
           <div className={"detail-block" + (["preparation", "usage", "precautions"].includes(field) ? " usage-block" : "")} key={field}>
-            <h4>{label} / <span lang="km">{khmerLabel}</span></h4>
-            <BilingualDetail khmer={entry[field]} english={entry.english?.[field]} />
+            <h4>{pick(khmerLabel, label)}</h4>
+            <BilingualDetail khmer={entry[field]} english={entry.english?.[field]} field={field} />
           </div>
         ))}
       </div>
@@ -58,15 +59,15 @@ export default function EntryCard({ entry, recordNumber, defaultOpen = false }) 
           ["contributor", "អ្នកចូលរួមចំណែក / ប្រភព / Contributor / Source"],
           ["place", "ទីកន្លែង / តំបន់ / Place / Region"],
           ["learnedFrom", "រៀនពី / Learned from"],
-        ].map(([field, label]) => (
+        ].filter(([field]) => hasRecordContent(entry[field]) || hasRecordContent(entry.english?.[field])).map(([field, label]) => (
           <div key={field}>
-            <dt>{label}</dt>
+            <dt><LanguageText text={label} /></dt>
             <dd><BilingualDetail khmer={entry[field]} english={entry.english?.[field]} /></dd>
           </div>
         ))}
       </dl>
-      {entry.story && <div className="translation-note"><h4>រឿងរ៉ាវ / Story</h4><p>{entry.story}</p></div>}
-      {entry.id && <p className="translation-note"><a href={`/entries/${encodeURIComponent(entry.id)}`}>បើកទំព័រកំណត់ត្រា / Open entry page</a></p>}
+      {entry.story && <div className="translation-note"><h4><LanguageText text={"រឿងរ៉ាវ / Story"} /></h4><BilingualDetail khmer={entry.story} english={entry.english?.story} /></div>}
+      {entry.id && <p className="translation-note"><a href={`/entries/${encodeURIComponent(entry.id)}`}><LanguageText text={"បើកទំព័រកំណត់ត្រា / Open entry page"} /></a></p>}
     </details>
   );
 }

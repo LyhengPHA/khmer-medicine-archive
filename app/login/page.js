@@ -1,5 +1,8 @@
 "use client";
 
+import LanguageText from "../../components/LanguageText.js";
+
+
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { createClient } from "../../lib/supabase/client.js";
@@ -40,13 +43,13 @@ export default function LoginPage() {
 
         {error ? (
           <p className="auth-error" role="alert">
-            {error}
+            <LanguageText text={error} />
           </p>
         ) : null}
 
         <form onSubmit={handleSubmit}>
           <div className="auth-field">
-            <label htmlFor="login-email">អ៊ីមែល / Email</label>
+            <label htmlFor="login-email"><LanguageText text={"អ៊ីមែល / Email"} /></label>
             <input
               id="login-email"
               type="email"
@@ -58,7 +61,7 @@ export default function LoginPage() {
           </div>
 
           <div className="auth-field">
-            <label htmlFor="login-password">ពាក្យសម្ងាត់ / Password</label>
+            <label htmlFor="login-password"><LanguageText text={"ពាក្យសម្ងាត់ / Password"} /></label>
             <input
               id="login-password"
               type="password"
@@ -70,12 +73,11 @@ export default function LoginPage() {
           </div>
 
           <button className="auth-submit" type="submit" disabled={isSubmitting}>
-            {isSubmitting ? "កំពុងចូលគណនី… / Logging in…" : "ចូលគណនី / Log in"}
+            <LanguageText text={isSubmitting ? "កំពុងចូលគណនី… / Logging in…" : "ចូលគណនី / Log in"} />
           </button>
         </form>
 
-        <p className="auth-switch">
-          ត្រូវការគណនីអ្នកចូលរួមចំណែកមែនទេ? / Need a contributor account? <a href="/signup">ចុះឈ្មោះ / Sign up</a>
+        <p className="auth-switch"><LanguageText text={"ត្រូវការគណនីអ្នកចូលរួមចំណែកមែនទេ? / Need a contributor account?"} />{" "}<a href="/signup"><LanguageText text={"ចុះឈ្មោះ / Sign up"} /></a>
         </p>
     </AuthLeafPanel>
   );

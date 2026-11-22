@@ -1,5 +1,8 @@
 "use client";
 
+import LanguageText from "./LanguageText.js";
+
+
 import { useState } from "react";
 import ReviewEntryCard from "./ReviewEntryCard.js";
 
@@ -11,7 +14,7 @@ export default function ReviewQueue({ initialEntries }) {
   }
 
   if (entries.length === 0) return (
-    <p role="status">គ្មានកំណត់ត្រារង់ចាំការពិនិត្យទេ។ / No entries are waiting for review.</p>
+    <p role="status"><LanguageText text={"គ្មានកំណត់ត្រារង់ចាំការពិនិត្យទេ។ / No entries are waiting for review."} /></p>
   );
 
   return (

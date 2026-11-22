@@ -1,5 +1,7 @@
+import LanguageText from "../../components/LanguageText.js";
 import { createClient } from "../../lib/supabase/server.js";
 import ArchivePage from "../../components/ArchivePage.js";
+import EntryTitle from "../../components/EntryTitle.js";
 
 export const dynamic = "force-dynamic";
 
@@ -17,11 +19,11 @@ export default async function MyEntriesPage() {
     if (authError && authError.name !== "AuthSessionMissingError") throw authError;
     if (!user || authError) return (
       <ArchivePage title="កំណត់ត្រារបស់ខ្ញុំ / My entries">
-        <p><a href="/login">សូមចូលគណនី / Please log in</a> ដើម្បីមើលកំណត់ត្រារបស់អ្នក។ / to view your entries.</p>
+        <p><a href="/login"><LanguageText text={"សូមចូលគណនី / Please log in"} /></a>{" "}<LanguageText text={"ដើម្បីមើលកំណត់ត្រារបស់អ្នក។ / to view your entries."} /></p>
       </ArchivePage>
     );
     const { data, error } = await supabase.from("entries")
-      .select("id, title, status").eq("owner", user.id)
+      .select("id, title, englishTitle, status").eq("owner", user.id)
       .order("created_at", { ascending: false });
     if (error) throw error;
     entries = data ?? [];
@@ -29,21 +31,21 @@ export default async function MyEntriesPage() {
     console.error("My entries lookup failed", error);
     return (
       <ArchivePage title="កំណត់ត្រារបស់ខ្ញុំ / My entries">
-        <p role="alert">មិនអាចផ្ទុកកំណត់ត្រាបាន។ / Could not load your entries.</p>
-        <a href="/my-entries">ព្យាយាមម្តងទៀត / Try again</a>
+        <p role="alert"><LanguageText text={"មិនអាចផ្ទុកកំណត់ត្រាបាន។ / Could not load your entries."} /></p>
+        <a href="/my-entries"><LanguageText text={"ព្យាយាមម្តងទៀត / Try again"} /></a>
       </ArchivePage>
     );
   }
   return (
     <ArchivePage title="កំណត់ត្រារបស់ខ្ញុំ / My entries">
       {entries.length === 0 ? (
-        <p role="status">អ្នកមិនទាន់មានកំណត់ត្រាទេ។ / You have no entries yet. <a href="/contribute">ដាក់ស្នើកំណត់ត្រា / Contribute an entry</a></p>
+        <p role="status"><LanguageText text={"អ្នកមិនទាន់មានកំណត់ត្រាទេ។ / You have no entries yet."} />{" "}<a href="/contribute"><LanguageText text={"ដាក់ស្នើកំណត់ត្រា / Contribute an entry"} /></a></p>
       ) : (
         <ul>
           {entries.map((entry) => (
             <li key={entry.id}>
-              <a href={`/entries/${encodeURIComponent(entry.id)}`}>{entry.title}</a>
-              <p>{statuses[entry.status] ?? "មិនស្គាល់ស្ថានភាព / Unknown status"}</p>
+              <a href={`/entries/${encodeURIComponent(entry.id)}`}><EntryTitle entry={entry} /></a>
+              <p><LanguageText text={statuses[entry.status] ?? "មិនស្គាល់ស្ថានភាព / Unknown status"} /></p>
             </li>
           ))}
         </ul>

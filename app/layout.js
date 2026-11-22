@@ -1,5 +1,6 @@
 import collection from "../collection.config.js";
 import localFont from "next/font/local";
+import LanguageProvider from "../components/LanguageProvider.js";
 import "./globals.css";
 import "./entry-tree.css";
 
@@ -17,8 +18,8 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" className={khmerFont.variable}>
-      <body>{children}</body>
+    <html lang="km" className={khmerFont.variable}>
+      <body><LanguageProvider>{children}</LanguageProvider></body>
     </html>
   );
 }

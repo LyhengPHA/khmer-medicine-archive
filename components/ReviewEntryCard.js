@@ -1,6 +1,9 @@
+import LanguageText from "./LanguageText.js";
 import BilingualDetail from "./BilingualDetail.js";
 import EntryPhoto from "./EntryPhoto.js";
 import ReviewEntryActions from "./ReviewEntryActions.js";
+import EntryTitle from "./EntryTitle.js";
+import { hasRecordContent, recordDescription } from "../lib/language.js";
 
 const details = [
   ["ingredients", "គ្រឿងផ្សំ / Ingredients"],
@@ -11,21 +14,21 @@ const details = [
 ];
 
 export default function ReviewEntryCard({ entry, onReviewed }) {
+  const description = recordDescription(entry);
   return (
     <article className="entry-card">
-      <h2 className="khmer-entry-name">{entry.title}</h2>
-      {entry.englishTitle && <p className="english-name" lang="en">{entry.englishTitle}</p>}
-      <p>កាលបរិច្ឆេទដាក់ស្នើ / Submitted: <time dateTime={entry.created_at}>{entry.created_at?.slice(0, 10)}</time></p>
+      <h2 className="khmer-entry-name"><EntryTitle entry={entry} /></h2>
+      <p><LanguageText text={"កាលបរិច្ឆេទដាក់ស្នើ / Submitted:"} />{" "}<time dateTime={entry.created_at}>{entry.created_at?.slice(0, 10)}</time></p>
       <div className="detail-block">
-        <h3>ការពិពណ៌នា / Description</h3>
-        <BilingualDetail khmer={entry.khmerDescription} english={entry.description} />
+        <h3><LanguageText text={"ការពិពណ៌នា / Description"} /></h3>
+        <BilingualDetail khmer={description.source} english={description.english} />
       </div>
       <div className="entry-details">
         <EntryPhoto entry={entry} />
-        {details.map(([field, label]) => (
+        {details.filter(([field]) => hasRecordContent(entry[field]) || hasRecordContent(entry.english?.[field])).map(([field, label]) => (
           <div className="detail-block" key={field}>
-            <h3>{label}</h3>
-            <BilingualDetail khmer={entry[field]} english={entry.english?.[field]} />
+            <h3><LanguageText text={label} /></h3>
+            <BilingualDetail khmer={entry[field]} english={entry.english?.[field]} field={field} />
           </div>
         ))}
       </div>

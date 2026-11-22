@@ -1222,3 +1222,39 @@ a {
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
 }
+
+/* The same controls and content are presented in the selected language. */
+.language-switcher {
+  display: inline-flex;
+  flex: 0 0 auto;
+  gap: 2px;
+  max-width: 100%;
+  padding: 3px;
+  border: 1px solid #a7ae97;
+  border-radius: 8px;
+}
+.language-switcher button {
+  min-height: 44px;
+  padding: 7px 12px;
+  border: 0;
+  border-radius: 5px;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  font-size: 14px;
+  line-height: 1.5;
+  cursor: pointer;
+}
+.language-switcher button[aria-pressed="true"] { background: #e8dcbc; color: #102b24; font-weight: 600; }
+.language-switcher button:hover { background: #cfc4a7; color: #102b24; }
+.language-switcher button:focus-visible { outline: 2px solid #d7bf84; outline-offset: 3px; }
+.site-header .language-switcher { color: #f0eadc; }
+.auth-language { display: flex; justify-content: flex-end; margin-bottom: 20px; }
+.auth-language .language-switcher { color: #102b24; border-color: #61794b; }
+.translation-pending { display: block; margin-top: 5px; color: #655b42; font-size: 12px; line-height: 1.65; font-weight: 400; }
+html[lang="en"] .entry-toggle .khmer-entry-name { line-height: 1.4; }
+html[lang="en"] .hero h1 { overflow-wrap: normal; }
+@media (max-width: 760px) {
+  .header-auth .language-switcher { margin-left: auto; }
+  .language-switcher button { padding-inline: 10px; }
+}

@@ -1,16 +1,21 @@
 "use client";
 
+import LanguageText from "./LanguageText.js";
+
+
 import { useRef, useState } from "react";
 import { useRouter } from "next/navigation";
+import { useLanguage } from "./LanguageProvider.js";
 
 export default function EntryOwnerControls({ id }) {
+  const { ui } = useLanguage();
   const router = useRouter();
   const pending = useRef(false);
   const [busy, setBusy] = useState(false);
   const [message, setMessage] = useState("");
 
   async function handleDelete() {
-    if (pending.current || !window.confirm("លុបកំណត់ត្រានេះមែនទេ? សកម្មភាពនេះមិនអាចត្រឡប់វិញបានទេ។ / Delete this entry? This cannot be undone.")) return;
+    if (pending.current || !window.confirm(ui("លុបកំណត់ត្រានេះមែនទេ? សកម្មភាពនេះមិនអាចត្រឡប់វិញបានទេ។ / Delete this entry? This cannot be undone."))) return;
     pending.current = true;
     setBusy(true);
     setMessage("");
@@ -36,10 +41,10 @@ export default function EntryOwnerControls({ id }) {
   return (
     <div className="entry-owner-controls" aria-busy={busy}>
       <div className="entry-owner-actions">
-        {!busy && <a href={`/entries/${encodeURIComponent(id)}/edit`}>កែកំណត់ត្រា / Edit entry</a>}
-        <button type="button" onClick={handleDelete} disabled={busy}>{busy ? "កំពុងលុប… / Deleting…" : "លុបកំណត់ត្រា / Delete entry"}</button>
+        {!busy && <a href={`/entries/${encodeURIComponent(id)}/edit`}><LanguageText text={"កែកំណត់ត្រា / Edit entry"} /></a>}
+        <button type="button" onClick={handleDelete} disabled={busy}><LanguageText text={busy ? "កំពុងលុប… / Deleting…" : "លុបកំណត់ត្រា / Delete entry"} /></button>
       </div>
-      {message && <p className="auth-error" role="alert">{message}</p>}
+      {message && <p className="auth-error" role="alert"><LanguageText text={message} /></p>}
     </div>
   );
 }

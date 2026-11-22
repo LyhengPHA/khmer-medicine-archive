@@ -1,5 +1,8 @@
 "use client";
 
+import LanguageText from "./LanguageText.js";
+
+
 import { useRef, useState } from "react";
 import EntryCard from "./EntryCard.js";
 import TreeArtwork from "./TreeArtwork.js";
@@ -13,8 +16,8 @@ export default function EntryTree({ entries, allEntries }) {
     <div className={`archive-tree${paused ? " archive-tree-paused" : ""}`}>
       <div className="archive-tree-heading">
         <div>
-          <p className="eyebrow">ចាក់ឫសក្នុងការចងចាំ / Rooted in memory</p>
-          <p className="archive-tree-intro">ចំណេះដឹងលូតលាស់នៅទីនេះ។ / Knowledge grows here.</p>
+          <p className="eyebrow"><LanguageText text={"ចាក់ឫសក្នុងការចងចាំ / Rooted in memory"} /></p>
+          <p className="archive-tree-intro"><LanguageText text={"ចំណេះដឹងលូតលាស់នៅទីនេះ។ / Knowledge grows here."} /></p>
         </div>
         <button
           type="button"
@@ -22,7 +25,7 @@ export default function EntryTree({ entries, allEntries }) {
           aria-pressed={paused}
           onClick={() => setPaused(!paused)}
         >
-          {paused ? "បន្តចលនា / Resume motion" : "ផ្អាកចលនា / Pause motion"}
+          <LanguageText text={paused ? "បន្តចលនា / Resume motion" : "ផ្អាកចលនា / Pause motion"} />
         </button>
       </div>
       <div className="archive-tree-scene" ref={scene}>
@@ -44,7 +47,7 @@ export default function EntryTree({ entries, allEntries }) {
             </div>
           ))}
         </div>
-        <p className="archive-tree-roots">ឫសគល់របស់យើង។ រឿងរ៉ាវរបស់យើង។ / Our roots. Our stories.</p>
+        <p className="archive-tree-roots"><LanguageText text={"ឫសគល់របស់យើង។ រឿងរ៉ាវរបស់យើង។ / Our roots. Our stories."} /></p>
       </div>
     </div>
   );
